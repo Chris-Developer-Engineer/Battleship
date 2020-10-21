@@ -1,3 +1,7 @@
+import javax.swing.*; //GUI
+import java.awt.*; //Font
+import java.awt.event.*; //Listeners
+
 public class TurnTracker
 {
     private int turnCount;
