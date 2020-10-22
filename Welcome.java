@@ -28,7 +28,7 @@ public class Welcome {
     public Welcome(){
         setScreen();
         mainScreen.setVisible(true);
-        String filePath = "C:\\Users\\yuntian chen\\IdeaProjects\\Ardent-Christopher Chen\\Music\\Heroic Feat (Main).wav";
+        String filePath = "\\Music\\Heroic Feat (Main).wav"; //Change FilePath
         musicStuff musicObject = new musicStuff();
         musicObject.playMusic((filePath));
     }

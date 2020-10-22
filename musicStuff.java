@@ -17,7 +17,7 @@ public class musicStuff {
                 clip.start();
                 clip.loop(clip.LOOP_CONTINUOUSLY);
                 status = 1;
-
+                /**
                 while(status ==1) {
                     JOptionPane.showMessageDialog(null, "press ok to pause playing");
                     long clipTimePostion = clip.getMicrosecondPosition();
@@ -27,6 +27,7 @@ public class musicStuff {
                     clip.setMicrosecondPosition(clipTimePostion);
                     clip.start();
                 }
+                **/
             }
 
             else{
