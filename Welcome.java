@@ -28,6 +28,9 @@ public class Welcome {
     public Welcome(){
         setScreen();
         mainScreen.setVisible(true);
+        String filePath = "C:\\Users\\yuntian chen\\IdeaProjects\\Ardent-Christopher Chen\\Music\\Heroic Feat (Main).wav";
+        musicStuff musicObject = new musicStuff();
+        musicObject.playMusic((filePath));
     }
 
     public void setScreen() {
