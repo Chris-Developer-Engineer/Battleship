@@ -6,6 +6,7 @@ public class Game {
     private final int WIDTH = 500, LENGTH = 500;
     private Style style = new Style();
     private JFrame gameScreen = style.frame("Welcome", WIDTH, LENGTH);
+    private TurnTracker tracker = new TurnTracker();
 
     //Menu Instantiation
     private JMenuBar mainBar = new JMenuBar();
