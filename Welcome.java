@@ -28,6 +28,9 @@ public class Welcome {
     public Welcome(){
         setScreen();
         mainScreen.setVisible(true);
+        String filePath = "\\Music\\Heroic Feat (Main).wav"; //Change FilePath
+        musicStuff musicObject = new musicStuff();
+        musicObject.playMusic((filePath));
     }
 
     public void setScreen() {
