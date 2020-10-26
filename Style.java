@@ -22,6 +22,11 @@ public class Style{
         return bodyFont;
     }
 
+    public Font buttonFont(){
+        Font bodyFont = new Font("Serif Bold Italic", Font.PLAIN, 12);
+        return bodyFont;
+    }
+
     //Buttons
     public JButton button(String name){
         JButton button = new JButton(name);
