@@ -15,6 +15,8 @@ public class Welcome {
     private final int WIDTH = 500, LENGTH = 500;
     private Style style = new Style();
     private JFrame mainScreen = style.frame("BattleShip", WIDTH, LENGTH);
+    private ImageIcon image;
+    private JLabel label;
 
     //Menu Instantiation
     private JMenuBar mainBar = new JMenuBar();
@@ -22,14 +24,22 @@ public class Welcome {
     private JMenuItem exitItem = style.menuItem("Exit");
 
     //Button/Labels Instantiation
+    Icon newGameImage = new ImageIcon(getClass().getResource("newgame.png"));
+    Icon settingsImage = new ImageIcon(getClass().getResource("settings.png"));
+    Icon rulesImage = new ImageIcon(getClass().getResource("rules.png"));
+    Icon exitImage = new ImageIcon(getClass().getResource("exit.png"));
+    Icon newGameRollover = new ImageIcon(getClass().getResource("newgamerollover.png"));
+    Icon settingsRollover = new ImageIcon(getClass().getResource("settingsrollover.png"));
+    Icon rulesRollover = new ImageIcon(getClass().getResource("rulesrollover.png"));
+    Icon exitRollover = new ImageIcon(getClass().getResource("exitrollover.png"));
     private JLabel welcome = style.label("Welcome to Battleship by Ardent");
-    private JButton newGame = style.button("New Game");
-    private JButton settings = style.button("Settings");
-    private JButton rules = style.button("Rules");
-    private JButton exitButton = style.button("Exit");
+    private JButton newGame = new JButton(newGameImage);
+    private JButton settings = new JButton(settingsImage);
+    private JButton rules = new JButton(rulesImage);
+    private JButton exitButton = new JButton(exitImage);
 
     //Panel
-    private JPanel mainPanel = new JPanel(new GridBagLayout());
+    private JPanel mainPanel = new JPanel();
     private JPanel welcomePanel = new JPanel(new GridBagLayout());
     private JPanel newGamePanel = new JPanel(new GridBagLayout());
     private JPanel settingsPanel = new JPanel(new GridBagLayout());
@@ -51,7 +61,12 @@ public class Welcome {
     }
 
     public void setScreen() {
+        image = new ImageIcon(getClass().getResource("ship.jpg"));
+        label = new JLabel(image);
+        label.setSize(500,500);
+        mainScreen.add(label);
         mainScreen.setLocationRelativeTo(null);
+        mainScreen.getContentPane().setBackground(Color.black);
         mainScreen.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         //Menu Instantiation
@@ -59,12 +74,14 @@ public class Welcome {
         fileMenu.add(exitItem);
 
         //Frame Organization
-        welcome.setFont(style.headlineFont());
+        welcome.setFont(style.headlineFont()); //Title of page
 
         //Set Panel with Buttons in Box Layout
         welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //mainPanel.setPreferredSize(new Dimension(490,400));
-        mainPanel.setLayout(layout);
+        mainPanel.setBorder(raisedBorder);
+        mainPanel.setBackground(Color.DARK_GRAY);
+        //mainPanel.setPreferredSize(new Dimension(350,400));
+        mainPanel.setBounds(80, 10, 350, 420);
         mainPanel.add(welcomePanel, BorderLayout.PAGE_START);
         mainPanel.add(newGamePanel, BorderLayout.CENTER);
         mainPanel.add(settingsPanel, BorderLayout.CENTER);
@@ -73,21 +90,30 @@ public class Welcome {
 
         //Welcome Panel
         welcomePanel.add(welcome); //Adds title to the page
+        welcomePanel.setBackground(Color.DARK_GRAY);
 
         //New Game Panel
         newGamePanel.add(newGame); //Adds new game button
+        newGame.setRolloverIcon(newGameRollover);
+        newGamePanel.setBackground(Color.DARK_GRAY);
 
         //Settings Panel
         settingsPanel.add(settings); //Adds settings button
+        settings.setRolloverIcon(settingsRollover);
+        settingsPanel.setBackground(Color.DARK_GRAY);
 
         //Rules panel
         rulesPanel.add(rules);
+        rules.setRolloverIcon(rulesRollover);
+        rulesPanel.setBackground(Color.DARK_GRAY);
 
         //Exit
         exitPanel.add(exitButton);
+        exitButton.setRolloverIcon(exitRollover);
+        exitPanel.setBackground(Color.DARK_GRAY);
 
         //Set main panel and menu bar to the JFrame
-        mainScreen.add(mainPanel);
+        label.add(mainPanel);
         mainScreen.setJMenuBar(mainBar);
 
         //Border
@@ -116,6 +142,22 @@ public class Welcome {
                     public void actionPerformed(ActionEvent e) {
                         new Game();
                         mainScreen.dispose();
+                    }
+                }
+        );
+
+        settings.addActionListener( //Settings button
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        new Settings();
+                    }
+                }
+        );
+
+        exitButton.addActionListener( //Exit button
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
                     }
                 }
         );

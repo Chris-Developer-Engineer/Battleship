@@ -30,7 +30,6 @@ public class Style{
     //Buttons
     public JButton button(String name){
         JButton button = new JButton(name);
-
         return button;
     }
 
