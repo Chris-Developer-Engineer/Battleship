@@ -3,6 +3,7 @@ import javax.swing.border.*;
 import java.awt.*; //Font
 import java.awt.event.*; //Listeners
 import java.awt.Color; //Color
+import java.awt.event.*; //Popup
 
 
 public class Game {
@@ -16,6 +17,7 @@ public class Game {
     private JMenuBar mainBar = new JMenuBar();
     private JMenu fileMenu = style.menu("File");
     private JMenuItem exitItem = style.menuItem("Exit");
+    final JPopupMenu popup = new JPopupMenu();
 
     //Images Instantiation....to update image replace file name
     Icon mainMenuImage = new ImageIcon(getClass().getResource("menu.png"));
@@ -34,6 +36,10 @@ public class Game {
     //Panel
     private JPanel centerPanel = new JPanel(); //Game boards will be placed here
     private JPanel winLossPanel = new JPanel(); //Game boards will be placed here
+    private JPanel shipHoldingPanel = new JPanel(); //Holds ships on bottom left of window
+    private JPanel opponentShips = new JPanel(); //Opponent's ship tracking panel
+    private JPanel playerShips = new JPanel(); //Player's ship tracking panel
+    private JPanel turnTracker = new JPanel(); //Displays turn tracking
 
     //Borders
     Border raisedBorder = new EtchedBorder(EtchedBorder.RAISED); //Raised Border
@@ -58,18 +64,17 @@ public class Game {
         mainBar.add(fileMenu);
         fileMenu.add(exitItem);
 
-        //Set Center Panel
-        centerPanel.setBorder(raisedBorder);
-        centerPanel.setBackground(new Color(0,0,0, 125)); //a is the transparency value
-        centerPanel.setBounds(325,10,600,610);
+        //Button Instantiation....if image is updated adjust bounds
+        mainMenu.setBounds(70,10,170,80);
+        settings.setBounds(70,100,170,80);
 
-        //WinLoss Panel
+        //Win Loss Statistics
         winLossPanel.setBorder(raisedBorder);
         winLossPanel.setLayout(new BoxLayout(winLossPanel, BoxLayout.Y_AXIS));
-        winLossPanel.setBackground(new Color(0,0,0,125));
-        winLossPanel.setBounds(935,400,305,220);
+        winLossPanel.setBackground(new Color(0,0,0,125)); //a is the transparency value
+        winLossPanel.setBounds(10,190,305,100);
 
-        /*winLossLabel.setFont(style.headlineFont());
+        winLossLabel.setFont(style.headlineFont());
         winLossLabel.setForeground(Color.WHITE);
 
         wins.setFont(style.bodyFont());
@@ -84,21 +89,46 @@ public class Game {
         winLossPanel.add(winLossLabel);
         winLossPanel.add(wins);
         winLossPanel.add(loss);
-        winLossPanel.add(rank);*/
+        winLossPanel.add(rank);
 
-        //Button Instantiation....if image is updated adjust bounds
-        mainMenu.setBounds(70,10,170,80);
-        settings.setBounds(70,100,170,80);
+        //Ship Holding Panel (bottom left of screen)
+        shipHoldingPanel.setBorder(raisedBorder);
+        shipHoldingPanel.setBackground(new Color(0,0,0,125)); //a is the transparency value
+        shipHoldingPanel.setBounds(10,300,305,320);
 
+        //Set Center Panel (Game boards)
+        centerPanel.setBorder(raisedBorder);
+        centerPanel.setBackground(new Color(0,0,0, 125)); //a is the transparency value
+        centerPanel.setBounds(325,10,600,610);
+
+        //Player's ship tracking panel (middle right)
+        playerShips.setBorder(raisedBorder);
+        playerShips.setBackground(new Color(0,0,0,125)); //a is the transparency value
+        playerShips.setBounds(935,235,305,155);
+
+        //Turn Tracking Panel (bottom right)
+        turnTracker.setBorder(raisedBorder);
+        turnTracker.setBackground(new Color(0,0,0,125)); //a is the transparency value
+        turnTracker.setBounds(935,400,305,220);
+
+        //Opponent's ship tracking panel (upper right)
+        opponentShips.setBorder(raisedBorder);
+        opponentShips.setBackground(new Color(0,0,0,125)); //a is the transparency value
+        opponentShips.setBounds(935,70,305,155);
+        
         //Set Screen
         back.add(centerPanel); //Panel for player vs AI game boards
+        back.add(turnTracker); //Panel to display turn history
+        back.add(shipHoldingPanel); //Panel to show available ships to place
+        back.add(opponentShips); //Panel to show opponents ships
+        back.add(playerShips); //Panel to show players ships
         back.add(winLossPanel); //Panel to display win loss statistics
         back.add(mainMenu);
         back.add(settings);
         gameScreen.setJMenuBar(mainBar);
 
         //Action Listeners
-        exitItem.addActionListener(
+        exitItem.addActionListener( //Exit button
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
                         System.exit(0);
@@ -106,7 +136,7 @@ public class Game {
                 }
         );
 
-        mainMenu.addActionListener( //Main Menu button
+        mainMenu.addActionListener( //Main from menu bar
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         new Welcome();
@@ -115,12 +145,10 @@ public class Game {
                 }
         );
 
-        settings.addActionListener( //Settings button
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        new Settings();
-                    }
+        settings.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    new Settings();
                 }
-        );
+        });
     }
 }
