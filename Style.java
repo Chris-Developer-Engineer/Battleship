@@ -18,7 +18,7 @@ public class Style{
     }
 
     public Font bodyFont(){
-        Font bodyFont = new Font("Time New Roman", Font.PLAIN, 12);
+        Font bodyFont = new Font("Helvetica", Font.PLAIN, 12);
         return bodyFont;
     }
 

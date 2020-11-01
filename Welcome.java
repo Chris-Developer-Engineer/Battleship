@@ -102,7 +102,7 @@ public class Welcome {
         rules.addActionListener( //Rules button
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        new Settings();
+                        new Rules();
                     }
                 }
         );

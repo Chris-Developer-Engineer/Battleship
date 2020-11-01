@@ -1,9 +1,9 @@
 public class WinLoss {
-    private double win = 0;
-    private double loss = 0;
-    private double ratio = 0;
-    private double gameCount = 0;
-    private String ranking = "Recruit";
+    static double win = 91;
+    static double loss = 9;
+    private static double ratio = 0;
+    private static double gameCount = win + loss;
+    static String ranking = "Recruit";
     private boolean winner = true;
 
     public void scoreTracker(int win, int loss, boolean winner) {
@@ -14,9 +14,9 @@ public class WinLoss {
         }
     }
 
-    public static void ranking(double win, double loss, double gameCount, double ratio, String ranking){
+    public static String ranking(){
         ratio = win/(win+loss);
-        System.out.println("Win: " + win + "\nLoss: " + loss + "\nTotal: " + gameCount + "\nRatio: " + ratio);
+        //System.out.println("Win: " + win + "\nLoss: " + loss + "\nTotal: " + gameCount + "\nRatio: " + ratio);
         if (ratio > (0.2) && ratio <= (0.6)){
             if (gameCount >= 20){
                 ranking = "Petty Officer";
@@ -34,6 +34,6 @@ public class WinLoss {
                 ranking = "Captain";
             }
         }
-        System.out.println("Your ranking is: " + ranking);
+        return ("Your ranking is: " + ranking);
     }
 }

@@ -2,13 +2,13 @@ import javax.swing.*; //GUI
 import java.awt.*; //Font,Dimensions
 import java.awt.event.*; //Listeners
 
-public class Settings {
-    JFrame settingsScreen = new JFrame("Settings");
+public class Rules {
+    JFrame settingsScreen = new JFrame("Rules");
 
     //Button
-    JButton save = new JButton("Save");
+    JButton save = new JButton("Exit");
 
-    public Settings(){
+    public Rules(){
         setScreen();
         settingsScreen.setVisible(true);
     }
