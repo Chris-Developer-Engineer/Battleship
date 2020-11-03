@@ -18,14 +18,18 @@ public class Style{
     }
 
     public Font bodyFont(){
-        Font bodyFont = new Font("Time New Roman", Font.PLAIN, 12);
+        Font bodyFont = new Font("Helvetica", Font.PLAIN, 12);
+        return bodyFont;
+    }
+
+    public Font buttonFont(){
+        Font bodyFont = new Font("Serif Bold Italic", Font.PLAIN, 12);
         return bodyFont;
     }
 
     //Buttons
     public JButton button(String name){
         JButton button = new JButton(name);
-
         return button;
     }
 
