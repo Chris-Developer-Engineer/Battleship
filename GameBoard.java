@@ -114,64 +114,67 @@ public class GameBoard /*extends JFrame*/ {
 
     // This method sets the ship locations for the AI board
     // (the player will try to kill all of the ships placed on this board
-    private void setAIShipLocations() {
+        private void setAIShipLocations () {
         // variables
         Random rand = new Random();
         ArrayList<String> location = new ArrayList<String>();
         ArrayList<String> temp = null;
         int letter, number, vert, horz;
         boolean worked;
+            try {
+                //Start first for loop
+                for (int i = 0; i < ship.size(); i++) {
+                    worked = false;
 
-        //Start first for loop
-        for(int i = 0; i < ship.size(); i++) {
-            worked = false;
+                    // Continue here if ship could not be placed
+                    start:
+                    //start while loop
+                    while (!worked) {
+                        location.clear(); //clear the location setter
+                        worked = true;
+                        letter = rand.nextInt(5);
+                        number = 1 + rand.nextInt(5);
 
-            // Continue here if ship could not be placed
-            start:
-                //start while loop
-                while(!worked) {
-                    location.clear(); //clear the location setter
-                    worked = true;
-                    letter = rand.nextInt(5);
-                    number = 1 + rand.nextInt(5);
+                        //this code is for vertical or horizontal ship placement
+                        if (number % 2 == 0) {
+                            vert = 1;
+                            horz = 0;
+                        } else {
+                            vert = 0;
+                            horz = 1;
+                        }
 
-                    //this code is for vertical or horizontal ship placement
-                    if(number % 2 == 0) {
-                        vert = 1;
-                        horz = 0;
-                    }
-                    else {
-                        vert = 0;
-                        horz = 1;
-                    }
+                        //start second for loop
+                        for (int j = 0; j < ship.get(i).getShipSize(); j++) {
 
-                    //start second for loop
-                    for(int j = 0; j < ship.get(i).getShipSize(); j++) {
-                        String loc = "" + alpha.charAt(letter) + number;
-                        letter += vert;
-                        number += horz;
+                            String loc = "" + alpha.charAt(letter) + number;
+                            letter += vert;
+                            number += horz;
 
-                        //start third for loop
-                        for(int t = 0; t < ship.size(); t++) {
-                            if(t != i) {
-                                temp = ship.get(t).getCurrLocations();
-                                if (temp.contains(loc)) {
-                                    worked = false;
-                                    continue start;
-                                }//end second if
-                            }//end first if
-                        }//end third for loop
+                            //start third for loop
+                            for (int t = 0; t < ship.size(); t++) {
+                                if (t != i) {
+                                    temp = ship.get(t).getCurrLocations();
+                                    if (temp.contains(loc)) {
+                                        worked = false;
+                                        continue start;
+                                    }//end second if
+                                }//end first if
+                            }//end third for loop
 
-                        location.add(loc); //add loc to location
+                            location.add(loc); //add loc to location
 
-                    }//end second for loop
+                        }//end second for loop
 
-                    ship.get(i).setShipLocations(location); //set the ship location
+                        ship.get(i).setShipLocations(location); //set the ship location
 
-                }//end while loop
-            }//end first for loop
-    }// end setAIShipLocations
-
+                    }//end while loop
+                }//end first for loop
+            }
+            catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }// end setAIShipLocations
 
     // This method is called when the game ends
     private void gameEnd() {
