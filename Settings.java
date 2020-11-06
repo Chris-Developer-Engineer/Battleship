@@ -7,6 +7,9 @@ public class Settings {
 
     //Button
     JButton save = new JButton("Save");
+    JButton volonoff = new JButton("ON/OFF");
+    JButton volup = new JButton("Vol UP");
+    JButton voldown = new JButton("Vol DOWN");
 
     public Settings(){
         setScreen();
@@ -19,6 +22,11 @@ public class Settings {
         settingsScreen.setSize(300,400);
 
         settingsScreen.add(save, BorderLayout.PAGE_END);
+        settingsScreen.add(volonoff);
+        settingsScreen.add(volup);
+        settingsScreen.add(voldown);
+
+        volonoff.setBounds(145,100,10,10);
 
 
         //Action Listener
