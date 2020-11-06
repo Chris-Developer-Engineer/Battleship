@@ -3,43 +3,42 @@ import javax.swing.border.*;
 import java.awt.*; //Font
 import java.awt.event.*; //Listeners
 import java.awt.Color; //Color
-import java.awt.event.*; //Popup
+
 
 
 public class Game {
     private final int WIDTH = 1250, LENGTH = 700;
-    private Style style = new Style();
-    private JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
+    private final Style style = new Style();
+    private final JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
     private ImageIcon background;
     private JLabel back;
 
     //Menu Instantiation
-    private JMenuBar mainBar = new JMenuBar();
-    private JMenu fileMenu = style.menu("File");
-    private JMenuItem exitItem = style.menuItem("Exit");
-    final JPopupMenu popup = new JPopupMenu();
+    private final JMenuBar mainBar = new JMenuBar();
+    private final JMenu fileMenu = style.menu("File");
+    private final JMenuItem exitItem = style.menuItem("Exit");
 
     //Images Instantiation....to update image replace file name
     Icon mainMenuImage = new ImageIcon(getClass().getResource("menu.png"));
     Icon settingsImage = new ImageIcon(getClass().getResource("settingsGame.png"));
 
     //Buttons
-    private JButton mainMenu = new JButton(mainMenuImage);
-    private JButton settings = new JButton(settingsImage);
+    private final JButton mainMenu = new JButton(mainMenuImage);
+    private final JButton settings = new JButton(settingsImage);
 
     //Labels
-    private JLabel winLossLabel = new JLabel("Win/Loss Statistics");
-    private JLabel wins = new JLabel("Wins: " + WinLoss.win);
-    private JLabel loss = new JLabel("Losses: " + WinLoss.loss);
-    private JLabel rank = new JLabel(WinLoss.ranking());
+    private final JLabel winLossLabel = new JLabel("Win/Loss Statistics");
+    private final JLabel wins = new JLabel("Wins: " + WinLoss.win);
+    private final JLabel loss = new JLabel("Losses: " + WinLoss.loss);
+    private final JLabel rank = new JLabel(WinLoss.ranking());
 
     //Panel
-    private JPanel centerPanel = new JPanel(); //Game boards will be placed here
-    private JPanel winLossPanel = new JPanel(); //Game boards will be placed here
-    private JPanel shipHoldingPanel = new JPanel(); //Holds ships on bottom left of window
-    private JPanel opponentShips = new JPanel(); //Opponent's ship tracking panel
-    private JPanel playerShips = new JPanel(); //Player's ship tracking panel
-    private JPanel turnTracker = new JPanel(); //Displays turn tracking
+    private final JPanel centerPanel = new JPanel(); //Game boards will be placed here
+    private final JPanel winLossPanel = new JPanel(); //Game boards will be placed here
+    private final JPanel shipHoldingPanel = new JPanel(); //Holds ships on bottom left of window
+    private final JPanel opponentShips = new JPanel(); //Opponent's ship tracking panel
+    private final JPanel playerShips = new JPanel(); //Player's ship tracking panel
+    private final JPanel turnTracker = new JPanel(); //Displays turn tracking
 
     //Borders
     Border raisedBorder = new EtchedBorder(EtchedBorder.RAISED); //Raised Border
@@ -129,26 +128,16 @@ public class Game {
 
         //Action Listeners
         exitItem.addActionListener( //Exit button
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent e){
-                        System.exit(0);
-                    }
-                }
+                e -> System.exit(0)
         );
 
         mainMenu.addActionListener( //Main from menu bar
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        new Welcome();
-                        gameScreen.dispose();
-                    }
+                e -> {
+                    new Welcome();
+                    gameScreen.dispose();
                 }
         );
 
-        settings.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new Settings();
-            }
-        });
+        settings.addActionListener(e -> new Settings());
     }
 }
