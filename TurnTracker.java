@@ -42,7 +42,7 @@ public class TurnTracker
 
     public boolean isPlayerTurn()
     {
-        if(turnCount % 2 == 1)
+        if(turnCount % 2 == 0)
             return true;
         else
             return false;
@@ -50,10 +50,10 @@ public class TurnTracker
 
     public void updatePanel(JPanel a, Style style)
     {
-        turnLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 36));
+        turnLabel.setFont(new Font("Helvetica", Font.PLAIN, 36));
         turnLabel.setForeground(Color.WHITE);
 
-        currTurn.setFont(new Font("Comic Sans MS", Font.PLAIN, 36));
+        currTurn.setFont(new Font("Helvetica", Font.PLAIN, 36));
         currTurn.setForeground(Color.WHITE);
 
         if(this.isPlayerTurn() == true)
