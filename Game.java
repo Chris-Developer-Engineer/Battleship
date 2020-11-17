@@ -1,17 +1,16 @@
 import javax.swing.*; //GUI
 import javax.swing.border.*;
 import java.awt.*; //Font
-import java.awt.event.*; //Listeners
 import java.awt.Color; //Color
 
 
 
 public class Game {
+
+    int gameSize;
     private final int WIDTH = 1250, LENGTH = 700;
     private final Style style = new Style();
-    private final JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
-    private ImageIcon background;
-    private JLabel back;
+    public final JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
 
     //Menu Instantiation
     private final JMenuBar mainBar = new JMenuBar();
@@ -34,6 +33,7 @@ public class Game {
 
     //Panel
     private final JPanel centerPanel = new JPanel(); //Game boards will be placed here
+    private final JPanel centerPanel1 = new JPanel(); //Game boards will be placed here
     private final JPanel winLossPanel = new JPanel(); //Game boards will be placed here
     private final JPanel shipHoldingPanel = new JPanel(); //Holds ships on bottom left of window
     private final JPanel opponentShips = new JPanel(); //Opponent's ship tracking panel
@@ -50,8 +50,8 @@ public class Game {
 
     public void setScreen(){
         //Background set
-        background = new ImageIcon(getClass().getResource("water.jpg"));
-        back = new JLabel(background);
+        ImageIcon background = new ImageIcon(getClass().getResource("water.jpg"));
+        JLabel back = new JLabel(background);
         back.setSize(1250,700);
 
         gameScreen.add(back);
@@ -98,7 +98,55 @@ public class Game {
         //Set Center Panel (Game boards)
         centerPanel.setBorder(raisedBorder);
         centerPanel.setBackground(new Color(0,0,0, 125)); //a is the transparency value
-        centerPanel.setBounds(325,10,600,610);
+        centerPanel.setBounds(325,10,600,295);
+        centerPanel1.setBorder(raisedBorder);
+        centerPanel1.setBackground(new Color(0,0,0, 125)); //a is the transparency value
+        centerPanel1.setBounds(325,315,600,295);
+        //if(gameBoardSize == 7) {
+            HitOrMiss buttons[]=new HitOrMiss[49];
+            centerPanel.setLayout(new GridLayout(7, 7));
+            for (int i = 0; i < 49; i++) {
+                buttons[i] = new HitOrMiss();
+                centerPanel.add(buttons[i]);
+            }
+
+            centerPanel1.setLayout(new GridLayout(7, 7));
+            for (int i = 0; i < 49; i++) {
+                buttons[i] = new HitOrMiss();
+                centerPanel1.add(buttons[i]);
+            }
+        //}
+        /*
+        if(gameBoardSize == 8) {
+            HitOrMiss buttons[]=new HitOrMiss[64];
+            centerPanel.setLayout(new GridLayout(8, 8));
+            for (int i = 0; i < 64; i++) {
+                buttons[i] = new HitOrMiss();
+                centerPanel.add(buttons[i]);
+            }
+
+            centerPanel1.setLayout(new GridLayout(8, 8));
+            for (int i = 0; i < 64; i++) {
+                buttons[i] = new HitOrMiss();
+                centerPanel1.add(buttons[i]);
+            }
+        }
+
+        if(gameBoardSize == 9) {
+            HitOrMiss buttons[]=new HitOrMiss[81];
+            centerPanel.setLayout(new GridLayout(9, 9));
+            for (int i = 0; i < 81; i++) {
+                buttons[i] = new HitOrMiss();
+                centerPanel.add(buttons[i]);
+            }
+
+            centerPanel1.setLayout(new GridLayout(9, 9));
+            for (int i = 0; i < 81; i++) {
+                buttons[i] = new HitOrMiss();
+                centerPanel1.add(buttons[i]);
+            }
+        }
+         */
 
         //Player's ship tracking panel (middle right)
         playerShips.setBorder(raisedBorder);
@@ -117,6 +165,7 @@ public class Game {
 
         //Set Screen
         back.add(centerPanel); //Panel for player vs AI game boards
+        back.add(centerPanel1); //Panel for player vs AI game boards
         back.add(turnTracker); //Panel to display turn history
         back.add(shipHoldingPanel); //Panel to show available ships to place
         back.add(opponentShips); //Panel to show opponents ships
@@ -140,4 +189,5 @@ public class Game {
 
         settings.addActionListener(e -> new Settings());
     }
+
 }
