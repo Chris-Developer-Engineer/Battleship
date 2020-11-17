@@ -86,6 +86,7 @@ public class Welcome {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         new Game();
+                        new BoardSelection();
                         mainScreen.dispose();
                     }
                 }
