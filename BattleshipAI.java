@@ -5,13 +5,13 @@ public class BattleshipAI{
     private static int column;
     private static int row;
     private static Random rand = new Random();
+    private static boolean turn;
 
-    public static void AI(int gridSize){
+    public static void AI(int[][] grid){
 
-        int[][] grid = new int[gridSize][gridSize];
+        turn = true;
         int turnCount = -1;
 
-        boolean turn = true;
         while(turn){ // it is AI's turn
 
     /*
@@ -25,12 +25,14 @@ public class BattleshipAI{
             if(grid[row][column] == 2){
 
             adjSpace(grid, row, column);
+            if(!turn)
+                return;
 
             }// end if statement
 
             //randomly select a space
-            row = rand.nextInt(gridSize);
-            column = rand.nextInt(gridSize);
+            row = rand.nextInt(grid.length);
+            column = rand.nextInt(grid[0].length);
 
             if(grid[row][column] == 3 || grid[row][column] == 4) // find another random space if space has already been attacked
                 continue;
@@ -39,13 +41,13 @@ public class BattleshipAI{
             if(grid[row][column] == 0){
                 grid[row][column] = 3;
                 //change color of space(attacked but no ship)
-                break;
+                return;
             }
 
             if(grid[row][column] == 1){
                 grid[row][column] = 2;
                 // change color of space(successful attack on ship)
-                break;
+                return;
             }
 
         }
@@ -69,6 +71,7 @@ public class BattleshipAI{
                         grid[row][column] = 2;
                         //** change color of space(successful attack on ship)
                         // move onto player's turn
+                        turn = false;
                         return;
                     }
 
@@ -76,6 +79,7 @@ public class BattleshipAI{
                         grid[row + 1][column] = 3;
                         //** change color of space(attacked but no ship)
                         // move onto player's turn
+                        turn = false;
                         return;
                     }
 
@@ -85,6 +89,7 @@ public class BattleshipAI{
                         grid[row][column] = 2;
                         //** change color of space(successful attack on ship)
                         // move onto player's turn
+                        turn = false;
                         return;
                     }
 
@@ -92,6 +97,7 @@ public class BattleshipAI{
                         grid[row - 1][column] = 3;
                         //** change color of space(attacked but no ship)
                         // move onto player's turn
+                        turn = false;
                         return;
                     }
 
@@ -101,6 +107,7 @@ public class BattleshipAI{
                         grid[row][column] = 2;
                         //** change color of space(successful attack on ship)
                         // move onto player's turn
+                        turn = false;
                         return;
                     }
 
@@ -108,6 +115,7 @@ public class BattleshipAI{
                         grid[row][column + 1] = 3;
                         //** change color of space(attacked but no ship)
                         // move onto player's turn
+                        turn = false;
                         return;
                     }
 
@@ -117,6 +125,7 @@ public class BattleshipAI{
                         grid[row][column] = 2;
                         //** change color of space(successful attack on ship)
                         // move onto player's turn
+                        turn = false;
                         return;
                     }
 
@@ -124,10 +133,13 @@ public class BattleshipAI{
                         grid[row][column - 1] = 3;
                         //** change color of space(attacked but no ship)
                         // move onto player's turn
+                        turn = false;
                         return;
                     }
 
             }//end switch
+
+
 
         }
 
