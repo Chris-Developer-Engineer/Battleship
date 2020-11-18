@@ -6,6 +6,7 @@ import java.awt.event.*; //Listeners
         private final int WIDTH = 500, LENGTH = 500;
         private Style style = new Style();
         private JFrame gameScreen = style.frame("Welcome", WIDTH, LENGTH);
+        //private TurnTracker tracker = new TurnTracker();
 
         //Menu Instantiation
         private JMenuBar mainBar = new JMenuBar();
@@ -81,7 +82,6 @@ import java.awt.event.*; //Listeners
                     new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             gameScreen.dispose();
-                            //edit this constructor for 9x9
                             GameBoard game = new GameBoard(9); //Creates a 9x9 gameboard object
                             game.initialize(); // Initializes the game
                         }
