@@ -43,6 +43,11 @@ public class Game {
     //Borders
     Border raisedBorder = new EtchedBorder(EtchedBorder.RAISED); //Raised Border
 
+    //Background Data
+    TurnTracker tracker = new TurnTracker();
+    BoardTracker userBoard = new BoardTracker();
+    BoardTracker oppBoard = new BoardTracker();
+
     public Game() {
         setScreen();
         gameScreen.setVisible(true);
@@ -157,6 +162,7 @@ public class Game {
         turnTracker.setBorder(raisedBorder);
         turnTracker.setBackground(new Color(0,0,0,125)); //a is the transparency value
         turnTracker.setBounds(935,400,305,220);
+        tracker.updatePanel(turnTracker, style);
 
         //Opponent's ship tracking panel (upper right)
         opponentShips.setBorder(raisedBorder);
