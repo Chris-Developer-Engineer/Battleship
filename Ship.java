@@ -36,6 +36,7 @@ public class Ship {
     //Check the user's answer
     public String check(String answer) {
         String result = "miss";
+
         if(location.contains(answer)) {
             location.remove(answer);
             result = location.isEmpty() ? "kill" : "hit";

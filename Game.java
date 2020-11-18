@@ -10,7 +10,9 @@ public class Game {
     int gameSize;
     private final int WIDTH = 1250, LENGTH = 700;
     private final Style style = new Style();
-    public final JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
+    private final JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
+    private ImageIcon background;
+    private JLabel back;
 
     //Menu Instantiation
     private final JMenuBar mainBar = new JMenuBar();
@@ -33,7 +35,6 @@ public class Game {
 
     //Panel
     private final JPanel centerPanel = new JPanel(); //Game boards will be placed here
-    private final JPanel centerPanel1 = new JPanel(); //Game boards will be placed here
     private final JPanel winLossPanel = new JPanel(); //Game boards will be placed here
     private final JPanel shipHoldingPanel = new JPanel(); //Holds ships on bottom left of window
     private final JPanel opponentShips = new JPanel(); //Opponent's ship tracking panel
