@@ -85,6 +85,7 @@ public class Welcome {
         newGame.addActionListener( //New Game button
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        new BoardSelection();
                         new Game();
                         new BoardSelection();
                         mainScreen.dispose();

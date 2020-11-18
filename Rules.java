@@ -3,29 +3,56 @@ import java.awt.*; //Font,Dimensions
 import java.awt.event.*; //Listeners
 
 public class Rules {
-    JFrame settingsScreen = new JFrame("Rules");
+    private final int WIDTH = 800, LENGTH = 600;
+    private Style style = new Style();
+    private JFrame rulesScreen = style.frame("Settings", WIDTH, LENGTH);
+    private ImageIcon rulesBackground;
+    private JLabel back;
+    private ImageIcon guide;
+    private JLabel rules;
+
+    //Image Instantiation
+    Icon rtmImage = new ImageIcon(getClass().getResource("MainMenuButton1.png"));
+
+    //Rollover image
+    Icon rtmImageRollover = new ImageIcon(getClass().getResource("MainMenuButton2.png"));
 
     //Button
-    JButton save = new JButton("Exit");
+    private JButton returnToMenu = new JButton(rtmImage);
 
     public Rules(){
         setScreen();
-        settingsScreen.setVisible(true);
+        rulesScreen.setVisible(true);
     }
 
     public void setScreen(){
-        settingsScreen.setLocation(490, 190);
-        settingsScreen.setLayout(new FlowLayout(FlowLayout.CENTER));
-        settingsScreen.setSize(300,400);
+        //Background set
+        rulesBackground = new ImageIcon(getClass().getResource("RulesBG.jpg"));
+        back = new JLabel(rulesBackground);
+        back.setSize(500,500);
 
-        settingsScreen.add(save, BorderLayout.PAGE_END);
+        guide = new ImageIcon(getClass().getResource("Guide.png"));
+        rules = new JLabel(guide);
+        rules.setBounds(180, -130, 800,800);
+
+        rulesScreen.add(back);
+        rulesScreen.setLocationRelativeTo(null);
+        rulesScreen.getContentPane().setBackground(Color.black);
+        rulesScreen.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        returnToMenu.setBounds(450,520,300,24);
+
+        returnToMenu.setRolloverIcon(rtmImageRollover);
+
+        back.add(returnToMenu);
+        back.add(rules);
 
 
         //Action Listener
-        save.addActionListener( //Main Menu button
+        returnToMenu.addActionListener( //Main Menu button
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        settingsScreen.dispose();
+                        rulesScreen.dispose();
                     }
                 }
         );
