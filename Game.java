@@ -35,6 +35,7 @@ public class Game {
 
     //Panel
     private final JPanel centerPanel = new JPanel(); //Game boards will be placed here
+    private final JPanel centerPanel1 = new JPanel(); //Game boards will be placed here
     private final JPanel winLossPanel = new JPanel(); //Game boards will be placed here
     private final JPanel shipHoldingPanel = new JPanel(); //Holds ships on bottom left of window
     private final JPanel opponentShips = new JPanel(); //Opponent's ship tracking panel
@@ -105,9 +106,9 @@ public class Game {
         centerPanel.setBorder(raisedBorder);
         centerPanel.setBackground(new Color(0,0,0, 125)); //a is the transparency value
         centerPanel.setBounds(325,10,600,295);
-        //centerPanel1.setBorder(raisedBorder);
-        //centerPanel1.setBackground(new Color(0,0,0, 125)); //a is the transparency value
-        c//enterPanel1.setBounds(325,315,600,295);
+        centerPanel1.setBorder(raisedBorder);
+        centerPanel1.setBackground(new Color(0,0,0, 125)); //a is the transparency value
+        centerPanel1.setBounds(325,315,600,295);
         //if(gameBoardSize == 7) {
             HitOrMiss buttons[]=new HitOrMiss[49];
             centerPanel.setLayout(new GridLayout(7, 7));
@@ -116,10 +117,10 @@ public class Game {
                 centerPanel.add(buttons[i]);
             }
 
-            //centerPanel1.setLayout(new GridLayout(7, 7));
+            centerPanel1.setLayout(new GridLayout(7, 7));
             for (int i = 0; i < 49; i++) {
                 buttons[i] = new HitOrMiss();
-                //centerPanel1.add(buttons[i]);
+                centerPanel1.add(buttons[i]);
             }
         //}
         /*
@@ -172,7 +173,7 @@ public class Game {
 
         //Set Screen
         back.add(centerPanel); //Panel for player vs AI game boards
-        //back.add(centerPanel1); //Panel for player vs AI game boards
+        back.add(centerPanel1); //Panel for player vs AI game boards
         back.add(turnTracker); //Panel to display turn history
         back.add(shipHoldingPanel); //Panel to show available ships to place
         back.add(opponentShips); //Panel to show opponents ships
