@@ -1,3 +1,7 @@
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import javax.swing.*; //GUI
 import javax.swing.border.*;
 import java.awt.*; //Font
@@ -8,9 +12,9 @@ import java.awt.Color; //Color
 public class Game {
 
     int gameSize;
-    private final int WIDTH = 1250, LENGTH = 700;
-    private final Style style = new Style();
-    private final JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
+    private static final int WIDTH = 1250, LENGTH = 700;
+    private static final Style style = new Style();
+    public static final JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
     private ImageIcon background;
     private JLabel back;
 
@@ -50,9 +54,15 @@ public class Game {
     BoardTracker userBoard = new BoardTracker();
     BoardTracker oppBoard = new BoardTracker();
 
-    public Game() {
+    //sound effect;
+    static Clip clip; // BGM;
+    Clip clip2; //clip sound;
+    public Game() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         setScreen();
         gameScreen.setVisible(true);
+        SoundEffect.page = 2;
+        clip = new SoundEffect().playGameBGM();
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void setScreen(){
@@ -190,12 +200,38 @@ public class Game {
 
         mainMenu.addActionListener( //Main from menu bar
                 e -> {
-                    new Welcome();
+                    try {
+                        new Welcome();
+                        clip2 = new SoundEffect().playClickSound();
+                    } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                        unsupportedAudioFileException.printStackTrace();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    } catch (LineUnavailableException lineUnavailableException) {
+                        lineUnavailableException.printStackTrace();
+                    }
                     gameScreen.dispose();
+                    clip.stop();
                 }
         );
 
-        settings.addActionListener(e -> new Settings());
+
+        settings.addActionListener(e ->
+                {
+                    new Settings();
+                    try {
+                        clip2 = new SoundEffect().playClickSound();
+                    } catch (LineUnavailableException lineUnavailableException) {
+                        lineUnavailableException.printStackTrace();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                        unsupportedAudioFileException.printStackTrace();
+                    }
+                    gameScreen.setVisible(false);
+                }
+        );
+
     }
 
 }

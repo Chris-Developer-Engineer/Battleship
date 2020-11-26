@@ -22,7 +22,7 @@ public class SoundEffect {
         return clip;
     }
     Clip playMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-        return play("Heroic Feat (Main BGM).wav",Volume.x);
+        return play("BGM.wav",Volume.x);
     }
 
     Clip playGameBGM() throws LineUnavailableException, IOException, UnsupportedAudioFileException {

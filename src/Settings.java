@@ -1,3 +1,7 @@
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import javax.swing.*; //GUI
 import java.awt.*; //Font,Dimensions
 import java.awt.event.*; //Listeners
@@ -33,6 +37,9 @@ public class Settings {
     private JButton volUp = new JButton(volUpImage);
     private JButton volDown = new JButton(volDownImage);
     private JButton returnToMenu = new JButton(rtmImage);
+
+    //
+    Clip clip;
 
     public Settings(){
         setScreen();
@@ -86,8 +93,97 @@ public class Settings {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         settingsScreen.dispose();
+                        try {
+                            clip = new SoundEffect().playClickSound();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
+                        if(SoundEffect.page == 1)
+                            Welcome.mainScreen.setVisible(true);
+                        else if (SoundEffect.page == 2)
+                            Game.gameScreen.setVisible(true);
+
                     }
                 }
         );
+
+        volDown.addActionListener( //Main Menu button
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            clip = new SoundEffect().playClickSound();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
+                        Volume.downSound();
+                        System.out.println(Volume.x);
+                        if(SoundEffect.page == 1)
+                            SoundEffect.setVol(Volume.x,Welcome.clip);
+                        else if (SoundEffect.page == 2)
+                            SoundEffect.setVol(Volume.x,Game.clip);
+                    }
+                }
+        );
+        volUp.addActionListener( //Main Menu button
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            clip = new SoundEffect().playClickSound();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
+                        Volume.upSound();
+                        System.out.println(Volume.x);
+                        if(SoundEffect.page == 1)
+                            SoundEffect.setVol(Volume.x,Welcome.clip);
+                        else if (SoundEffect.page == 2)
+                            SoundEffect.setVol(Volume.x,Game.clip);
+                    }
+                }
+        );
+        volToggle.addActionListener( //Main Menu button
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            clip = new SoundEffect().playClickSound();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
+                        Volume.Mute();
+                        System.out.println(Volume.x);
+                        System.out.println(Volume.y);
+                        if(SoundEffect.page == 1)
+                            SoundEffect.setVol(Volume.x,Welcome.clip);
+                        else if (SoundEffect.page == 2)
+                            SoundEffect.setVol(Volume.x,Game.clip);
+                        try {
+                            clip = new SoundEffect().playClickSound();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
+                    }
+                }
+        );
+
     }
 }
