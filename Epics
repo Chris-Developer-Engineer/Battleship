@@ -1,0 +1,20 @@
+Ardent
+
+	
+Goal:
+
+Our goal for this project is to create a fun and interactive version of the classic game, Battleship. It will be a desktop version of the game. The program will allow the user to battle against the computer. Ideally, the user will place their ships on a board in a strategic manner and they will then guess where the computer has placed their ships and try to sink them.
+
+Description:
+
+The game is meant to simulate two sides firing at one another's naval ships on a set grid. The game begins with each side having an equal amount of ships. A ship can range from 2 to 5 tiles long and is placed anywhere on a 5x5 to 8x8 sized grid. Once each side has decided positions for their ships, a player to start is decided and each player will then proceed to take turns firing at coordinates where they believe an enemy ship to be positioned. Once a player guesses the position of a ship correctly or misses, the opposing player will notify if it is a hit or miss respectively. This will allow both sides to strategize based on whether they have been able to confirm the position of a ship. A ship must be hit in its entirety to be sunk. For example, a 2x2 ship must be hit four times and a 5x1 ship must be hit 5 times. A player can not strike the same square twice. Once a ship is sunk, the player will notify the opponent that a ship has sunk. The game continues until either side has all their ships sunk in which case the player with ships remaining wins. 
+
+Features:
+
+
+This game will feature one playing mode: player v. computer. You will have the option to choose from 3 levels of difficulty, easy, moderate, and advanced for the computer. There will also be an option to choose the game board size varying from 5x5 to 8x8. During each game, the score will be tallied and your wins and losses will be tracked. Once you quit the game, the score board will be reset to 0,0. Once a ship has been hit, that square will turn red. If the targeted square does not have a ship present, the square will turn black. Before the game begins, the number of ships that will be used by each player/computer will be determined based on the grid size selected. 5x5 will include 3 ships, 6x6 will include 4 ships, 7x7 will include 5 ships, 8x8 will include 6 ships.
+
+Software requirements:
+
+Windows 10
+Java
