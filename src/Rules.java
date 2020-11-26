@@ -1,6 +1,11 @@
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*; //GUI
 import java.awt.*; //Font,Dimensions
 import java.awt.event.*; //Listeners
+import java.io.IOException;
+
 
 public class Rules {
     private final int WIDTH = 650, LENGTH = 600;
@@ -55,8 +60,18 @@ public class Rules {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         rulesScreen.dispose();
+                        try {
+                            Clip clip = new SoundEffect().playClickSound();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
                     }
                 }
         );
+
     }
 }

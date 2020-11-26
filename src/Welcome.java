@@ -1,11 +1,15 @@
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import javax.swing.*; //GUI
 import java.awt.*; //Font
 import java.awt.event.*; //Listeners
 
 public class Welcome {
-    private final int WIDTH = 800, LENGTH = 500;
-    private Style style = new Style();
-    private JFrame mainScreen = style.frame("BattleShip", WIDTH, LENGTH);
+    private static int WIDTH = 800, LENGTH = 500;
+    private static Style style = new Style();
+    public static JFrame mainScreen = style.frame("BattleShip", WIDTH, LENGTH);
     private ImageIcon background;
     private JLabel back;
     private ImageIcon battle;
@@ -31,11 +35,17 @@ public class Welcome {
     private JButton settings = new JButton(settingsImage);
     private JButton rules = new JButton(rulesImage);
 
+    //SoundEffect
+    static Clip clip;
     //Constructor Instantiates the Frame
-    public Welcome(){
+    public Welcome() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         setScreen();
         mainScreen.setVisible(true);
+        SoundEffect.page = 1;
+        clip = new SoundEffect().playMain();
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
+
 
     public void setScreen() {
         //Background set
@@ -85,9 +95,19 @@ public class Welcome {
         newGame.addActionListener( //New Game button
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        new Game();
+                        new BoardSelection();
+                        try {
+                            new Game();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        }
                         new BoardSelection();
                         mainScreen.dispose();
+                        clip.stop();
                     }
                 }
         );
@@ -95,7 +115,19 @@ public class Welcome {
         settings.addActionListener( //Settings button
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        try {
+                            Clip clip2 = new SoundEffect().playClickSound();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
+
                         new Settings();
+                        mainScreen.setVisible(false);
+
                     }
                 }
         );
@@ -103,9 +135,20 @@ public class Welcome {
         rules.addActionListener( //Rules button
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        try {
+                            clip = new SoundEffect().playClickSound();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
+
                         new Rules();
                     }
                 }
         );
+
     }
 }
