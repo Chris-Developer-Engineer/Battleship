@@ -4,7 +4,7 @@ import java.awt.*; //Font
 import java.awt.event.*; //Listeners
 import java.awt.Color; //Color
 
-public class TurnTracker
+public class TurnTracker extends JLabel
 {
     private int turnCount;
     private JLabel turnLabel = new JLabel();
@@ -18,8 +18,6 @@ public class TurnTracker
     public TurnTracker()
     {
         this.turnCount = 0;
-        this.turnLabel.setText("Current turn:");
-        this.currTurn.setText("Setting up...");
     }
 
     //Increment the turnCount
@@ -48,6 +46,15 @@ public class TurnTracker
             return false;
     }
 
+    public void setTexts()
+    {
+        this.turnLabel.setText("Current turn:");
+        if(this.isPlayerTurn() == true)
+            currTurn.setText("Player");
+        else
+            currTurn.setText("Opponent");
+    }
+
     public void updatePanel(JPanel a, Style style)
     {
         turnLabel.setFont(new Font("Helvetica", Font.PLAIN, 36));
@@ -56,10 +63,8 @@ public class TurnTracker
         currTurn.setFont(new Font("Helvetica", Font.PLAIN, 36));
         currTurn.setForeground(Color.WHITE);
 
-        if(this.isPlayerTurn() == true)
-            currTurn.setText("Player");
-        else
-            currTurn.setText("Opponent");
+        setTexts();
+
         a.add(turnLabel);
         a.add(currTurn);
     }

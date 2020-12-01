@@ -127,6 +127,7 @@ public class Game {
         centerPanel1.setBorder(raisedBorder);
         centerPanel1.setBackground(new Color(0,0,0, 125)); //a is the transparency value
         centerPanel1.setBounds(325,315,600,295);
+
         //if(gameBoardSize == 7) {
         HitOrMiss buttons[]=new HitOrMiss[49];
         centerPanel.setLayout(new GridLayout(7, 7));
