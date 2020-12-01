@@ -1,6 +1,6 @@
 public class WinLoss {
-    static double win = 91;
-    static double loss = 9;
+    static double win = 0;
+    static double loss = 0;
     private static double ratio = 0;
     private static double gameCount = win + loss;
     static String ranking = "Recruit";

@@ -25,6 +25,9 @@ public class Rules {
     //Button
     private JButton returnToMenu = new JButton(rtmImage);
 
+    //SoundEffect;
+
+
     public Rules(){
         setScreen();
         rulesScreen.setVisible(true);
@@ -61,7 +64,7 @@ public class Rules {
                     public void actionPerformed(ActionEvent e) {
                         rulesScreen.dispose();
                         try {
-                            Clip clip = new SoundEffect().playClickSound();
+                            Clip clip2 = new SoundEffect().playClickSound();
                         } catch (LineUnavailableException lineUnavailableException) {
                             lineUnavailableException.printStackTrace();
                         } catch (IOException ioException) {
