@@ -126,7 +126,6 @@ public class Welcome {
                         }
 
                         new Settings();
-                        mainScreen.setVisible(false);
 
                     }
                 }
@@ -136,7 +135,7 @@ public class Welcome {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         try {
-                            clip = new SoundEffect().playClickSound();
+                            Clip clip2 = new SoundEffect().playClickSound();
                         } catch (LineUnavailableException lineUnavailableException) {
                             lineUnavailableException.printStackTrace();
                         } catch (IOException ioException) {

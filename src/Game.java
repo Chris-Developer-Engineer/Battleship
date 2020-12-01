@@ -24,8 +24,11 @@ public class Game {
     private final JMenuItem exitItem = style.menuItem("Exit");
 
     //Images Instantiation....to update image replace file name
-    Icon mainMenuImage = new ImageIcon(getClass().getResource("menu.png"));
-    Icon settingsImage = new ImageIcon(getClass().getResource("settingsGame.png"));
+    Icon mainMenuImage = new ImageIcon(getClass().getResource("MMenu1.png"));
+    Icon settingsImage = new ImageIcon(getClass().getResource("settings1.png"));
+
+    Icon mainMenuImageRollover = new ImageIcon(getClass().getResource("MMenu2.png"));
+    Icon settingsImageRollover = new ImageIcon(getClass().getResource("settings2.png"));
 
     //Buttons
     private final JButton mainMenu = new JButton(mainMenuImage);
@@ -57,6 +60,7 @@ public class Game {
     //sound effect;
     static Clip clip; // BGM;
     Clip clip2; //clip sound;
+
     public Game() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         setScreen();
         gameScreen.setVisible(true);
@@ -83,6 +87,10 @@ public class Game {
         //Button Instantiation....if image is updated adjust bounds
         mainMenu.setBounds(70,10,170,80);
         settings.setBounds(70,100,170,80);
+
+        //Rollover Icons
+        mainMenu.setRolloverIcon(mainMenuImageRollover);
+        settings.setRolloverIcon(settingsImageRollover);
 
         //Win Loss Statistics
         winLossPanel.setBorder(raisedBorder);
@@ -119,6 +127,7 @@ public class Game {
         centerPanel1.setBorder(raisedBorder);
         centerPanel1.setBackground(new Color(0,0,0, 125)); //a is the transparency value
         centerPanel1.setBounds(325,315,600,295);
+
         //if(gameBoardSize == 7) {
         HitOrMiss buttons[]=new HitOrMiss[49];
         centerPanel.setLayout(new GridLayout(7, 7));
@@ -228,7 +237,6 @@ public class Game {
                     } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
                         unsupportedAudioFileException.printStackTrace();
                     }
-                    gameScreen.setVisible(false);
                 }
         );
 
