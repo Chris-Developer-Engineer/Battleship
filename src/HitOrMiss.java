@@ -4,33 +4,45 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class HitOrMiss extends JButton implements ActionListener{
-    ImageIcon X,O;
-    byte value=0;
-	/*
-	0:nothing
-	1:X
-	2:O
-	*/
+    static ImageIcon X,O,S;
 
-    public HitOrMiss(){
-        X=new ImageIcon(this.getClass().getResource("X.png"));
-        O=new ImageIcon(this.getClass().getResource("O.png"));
+    public HitOrMiss(String number, boolean xOrO, boolean player){
+        if(xOrO && player) {
+            X = new ImageIcon(this.getClass().getResource("X.png"));
+            S = new ImageIcon((this.getClass().getResource("gray square.png")));
+            setIcon(S);
+        }
+
+        else if(xOrO && player == false) {
+            X = new ImageIcon(this.getClass().getResource("X.png"));
+        }
+
+        else{
+            O = new ImageIcon(this.getClass().getResource("O.png"));
+        }
+        this.setText(number);
         this.addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent e){
-        value++;
-        value%=3;
-        switch(value){
-            case 0:
-                setIcon(null);
-                break;
-            case 1:
+        if(GameBoard.clickSwitch && GameBoard.playerTurnTracker) {
+            if(GameBoard.doClickSentHit) {
                 setIcon(X);
-                break;
-            case 2:
+            }
+            else if(GameBoard.doClickSentMiss) {
                 setIcon(O);
-                break;
+            }
+
+        }
+
+        else if(GameBoard.clickSwitch && GameBoard.AITurnTracker) {
+            if(GameBoard.doClickSentHitAI) {
+                setIcon(X);
+            }
+            else if(GameBoard.doClickSentMissAI) {
+                setIcon(O);
+            }
+
         }
     }
 }

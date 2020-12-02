@@ -1,18 +1,19 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*; //GUI
 import java.awt.*; //Font
 import java.awt.event.*; //Listeners
+import java.io.IOException;
 
 public class BoardSelection {
     private final int WIDTH = 200, LENGTH = 350;
-    private Style style = new Style();
-    private JFrame gameScreen = style.frame("Welcome", WIDTH, LENGTH);
-    private ImageIcon selectionBackground;
-    private JLabel back;
+    private final Style style = new Style();
+    private final JFrame gameScreen = style.frame("Welcome", WIDTH, LENGTH);
 
     //Menu Instantiation
-    private JMenuBar mainBar = new JMenuBar();
-    private JMenu fileMenu = style.menu("File");
-    private JMenuItem exitItem = style.menuItem("Exit");
+    private final JMenuBar mainBar = new JMenuBar();
+    private final JMenu fileMenu = style.menu("File");
+    private final JMenuItem exitItem = style.menuItem("Exit");
 
     //Images Instantiation....to update image replace file name
     Icon gameBoardSeven = new ImageIcon(getClass().getResource("7x71.png"));
@@ -25,9 +26,9 @@ public class BoardSelection {
     Icon NineRollover = new ImageIcon(getClass().getResource("9x92.png"));
 
     //Button/Labels Instantiation
-    private JButton board1 = new JButton(gameBoardSeven);
-    private JButton board2 = new JButton(gameBoardEight);
-    private JButton board3 = new JButton(gameBoardNine);
+    private final JButton board1 = new JButton(gameBoardSeven);
+    private final JButton board2 = new JButton(gameBoardEight);
+    private final JButton board3 = new JButton(gameBoardNine);
 
 
     public BoardSelection() {
@@ -39,8 +40,8 @@ public class BoardSelection {
         gameScreen.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         //Background set
-        selectionBackground = new ImageIcon(getClass().getResource("SelectionBG.png"));
-        back = new JLabel(selectionBackground);
+        ImageIcon selectionBackground = new ImageIcon(getClass().getResource("SelectionBG.png"));
+        JLabel back = new JLabel(selectionBackground);
         back.setSize(199, 350);
 
         gameScreen.add(back);
@@ -81,8 +82,11 @@ public class BoardSelection {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         gameScreen.dispose();
-                        GameBoard game = new GameBoard(7); //Creates a 7x7 gameboard object
-                        game.initialize(); // Initializes the game
+                        try {
+                            new Game(7);
+                        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
                     }
                 }
         );
@@ -91,8 +95,11 @@ public class BoardSelection {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         gameScreen.dispose();
-                        GameBoard game = new GameBoard(8); //Creates a 8x8 gameboard object
-                        game.initialize(); // Initializes the game
+                        try {
+                            new Game(8);
+                        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
                     }
                 }
         );
@@ -101,9 +108,11 @@ public class BoardSelection {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         gameScreen.dispose();
-                        //edit this constructor for 9x9
-                        GameBoard game = new GameBoard(9); //Creates a 9x9 gameboard object
-                        game.initialize(); // Initializes the game
+                        try {
+                            new Game(9);
+                        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        }
                     }
                 }
         );

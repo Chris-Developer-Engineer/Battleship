@@ -6,17 +6,39 @@ import javax.swing.*; //GUI
 import javax.swing.border.*;
 import java.awt.*; //Font
 import java.awt.Color; //Color
-
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Game {
 
-    int gameSize;
+    int gameBoardSize;
+    String[] gameBoardArray7 = {"A1","A2","A3","A4","A5","A6","A7","B1","B2","B3","B4","B5","B6"
+            ,"B7","C1","C2","C3","C4","C5","C6","C7","D1","D2","D3"
+            ,"D4","D5","D6","D7","E1","E2","E3","E4","E5","E6","E7"
+            ,"F1","F2","F3","F4","F5","F6","F7","G1","G2","G3","G4","G5","G6"
+            ,"G7"};
+
+    String[] gameBoardArray8 = {"A1","A2","A3","A4","A5","A6","A7","A8","B1","B2","B3","B4","B5","B6"
+            ,"B7","B8","C1","C2","C3","C4","C5","C6","C7","C8","D1","D2","D3"
+            ,"D4","D5","D6","D7","D8","E1","E2","E3","E4","E5","E6","E7","E8"
+            ,"F1","F2","F3","F4","F5","F6","F7","F8","G1","G2","G3","G4","G5","G6"
+            ,"G7","G8","H1","H2","H3","H4","H5","H6","H7","H8"};
+
+    String[] gameBoardArray9 = {"A1","A2","A3","A4","A5","A6","A7","A8","A9","B1","B2","B3","B4","B5","B6"
+            ,"B7","B8","B9","C1","C2","C3","C4","C5","C6","C7","C8","C9","D1","D2","D3"
+            ,"D4","D5","D6","D7","D8","D9","E1","E2","E3","E4","E5","E6","E7","E8","E9"
+            ,"F1","F2","F3","F4","F5","F6","F7","F8","F9","G1","G2","G3","G4","G5","G6"
+            ,"G7","G8","G9","H1","H2","H3","H4","H5","H6","H7","H8","H9","I1","I2","I3"
+            ,"I4","I5","I6","I7","I8","I9"};
+
+    static HitOrMiss[] buttons;
+    static HitOrMiss[] buttons1;
+
+
     private static final int WIDTH = 1250, LENGTH = 700;
     private static final Style style = new Style();
     public static final JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
-    private ImageIcon background;
-    private JLabel back;
 
     //Menu Instantiation
     private final JMenuBar mainBar = new JMenuBar();
@@ -41,8 +63,8 @@ public class Game {
     private final JLabel rank = new JLabel(WinLoss.ranking());
 
     //Panel
-    private final JPanel centerPanel = new JPanel(); //Game boards will be placed here
-    private final JPanel centerPanel1 = new JPanel(); //Game boards will be placed here
+    public static JPanel centerPanel; //Game boards will be placed here
+    public static JPanel centerPanel1; //Game boards will be placed here
     private final JPanel winLossPanel = new JPanel(); //Game boards will be placed here
     private final JPanel shipHoldingPanel = new JPanel(); //Holds ships on bottom left of window
     private final JPanel opponentShips = new JPanel(); //Opponent's ship tracking panel
@@ -57,11 +79,48 @@ public class Game {
     BoardTracker userBoard = new BoardTracker();
     BoardTracker oppBoard = new BoardTracker();
 
+
     //sound effect;
     static Clip clip; // BGM;
     Clip clip2; //clip sound;
 
-    public Game() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    //Constructor
+    public Game(int size) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        gameBoardSize = size;
+        centerPanel = new JPanel(); //Game boards will be placed here
+        centerPanel1 = new JPanel();
+
+        if(gameBoardSize == 7) {
+            buttons = new HitOrMiss[49];
+            buttons1 = new HitOrMiss[49];
+        }
+
+        else if(gameBoardSize == 8){
+            buttons = new HitOrMiss[64];
+            buttons1 = new HitOrMiss[64];
+        }
+
+        else if(gameBoardSize == 9){
+            buttons = new HitOrMiss[81];
+            buttons1 = new HitOrMiss[81];
+        }
+
+        GameBoard gameBoard = null;
+
+        if(size == 7) {
+            gameBoard = new GameBoard(7);
+        }
+
+        if(size == 8) {
+            gameBoard = new GameBoard(8);
+        }
+
+        if(size == 9) {
+            gameBoard = new GameBoard(9);
+        }
+
+        assert gameBoard != null;
+        gameBoard.initialize();
         setScreen();
         gameScreen.setVisible(true);
         SoundEffect.page = 2;
@@ -91,6 +150,7 @@ public class Game {
         //Rollover Icons
         mainMenu.setRolloverIcon(mainMenuImageRollover);
         settings.setRolloverIcon(settingsImageRollover);
+
 
         //Win Loss Statistics
         winLossPanel.setBorder(raisedBorder);
@@ -128,51 +188,225 @@ public class Game {
         centerPanel1.setBackground(new Color(0,0,0, 125)); //a is the transparency value
         centerPanel1.setBounds(325,315,600,295);
 
-        //if(gameBoardSize == 7) {
-        HitOrMiss buttons[]=new HitOrMiss[49];
-        centerPanel.setLayout(new GridLayout(7, 7));
-        for (int i = 0; i < 49; i++) {
-            buttons[i] = new HitOrMiss();
-            centerPanel.add(buttons[i]);
-        }
+        //Select Board Size
+        if(gameBoardSize == 7) {
+            centerPanel.setLayout(new GridLayout(7, 7));
+            List<String> listArray1 = new ArrayList<String>();
+            int j = 0;
 
-        centerPanel1.setLayout(new GridLayout(7, 7));
-        for (int i = 0; i < 49; i++) {
-            buttons[i] = new HitOrMiss();
-            centerPanel1.add(buttons[i]);
-        }
-        //}
-        /*
-        if(gameBoardSize == 8) {
-            HitOrMiss buttons[]=new HitOrMiss[64];
-            centerPanel.setLayout(new GridLayout(8, 8));
-            for (int i = 0; i < 64; i++) {
-                buttons[i] = new HitOrMiss();
-                centerPanel.add(buttons[i]);
+            for(String s : GameBoard.array1) {
+                if(s != null && s.length() > 0) {
+                    listArray1.add(s);
+                }
             }
 
-            centerPanel1.setLayout(new GridLayout(8, 8));
+            GameBoard.array1 = listArray1.toArray(new String[0]);
+
+            Arrays.sort(GameBoard.array1);
+
+            String[] array1Sorted = new String[100];
+
+            System.arraycopy(GameBoard.array1, 0, array1Sorted, 0, 8);
+
+            for(int t=8; t < 40; t++){
+                array1Sorted[t] = "0";
+            }
+            for (int i = 0; i < 49; i++) {
+                try{
+
+                    if (array1Sorted[j].equals(gameBoardArray7[i])) {
+                        buttons[i] = new HitOrMiss(gameBoardArray7[i], true, false);
+                        centerPanel.add(buttons[i]);
+                        j++;
+                    } else {
+                        buttons[i] = new HitOrMiss(gameBoardArray7[i], false, false);
+                        centerPanel.add(buttons[i]);
+                    }
+                }catch(Exception ignored){}
+            }
+
+            ////////AI BOARD
+            centerPanel1.setLayout(new GridLayout(7, 7));
+            List<String> listArray2 = new ArrayList<String>();
+            int r = 0;
+
+            for(String s : GameBoard.arrayAI1) {
+                if(s != null && s.length() > 0) {
+                    listArray2.add(s);
+                }
+            }
+
+            GameBoard.arrayAI1 = listArray2.toArray(new String[0]);
+
+            Arrays.sort(GameBoard.arrayAI1);
+
+            String[] array2Sorted = new String[100];
+
+            System.arraycopy(GameBoard.arrayAI1, 0, array2Sorted, 0, 8);
+
+            for(int t=8; t < 40; t++){
+                array2Sorted[t] = "0";
+            }
+            for (int i = 0; i < 49; i++) {
+                try{
+
+                    if (array2Sorted[r].equals(gameBoardArray7[i])) {
+                        buttons1[i] = new HitOrMiss(gameBoardArray7[i], true, true);
+                        centerPanel1.add(buttons1[i]);
+                        r++;
+                    } else {
+                        buttons1[i] = new HitOrMiss(gameBoardArray7[i], false, true);
+                        centerPanel1.add(buttons1[i]);
+                    }
+                }catch(Exception ignored){}
+            }
+        }
+
+        if(gameBoardSize == 8) {
+            centerPanel.setLayout(new GridLayout(8, 8));
+            List<String> listArray1 = new ArrayList<String>();
+            int j = 0;
+
+            for(String s : GameBoard.array1) {
+                if(s != null && s.length() > 0) {
+                    listArray1.add(s);
+                }
+            }
+
+            GameBoard.array1 = listArray1.toArray(new String[0]);
+
+            Arrays.sort(GameBoard.array1);
+
+            String[] array1Sorted = new String[100];
+
+            System.arraycopy(GameBoard.array1, 0, array1Sorted, 0, 12);
+
+            for(int t=12; t < 40; t++){
+                array1Sorted[t] = "0";
+            }
             for (int i = 0; i < 64; i++) {
-                buttons[i] = new HitOrMiss();
-                centerPanel1.add(buttons[i]);
+                try{
+
+                    if (array1Sorted[j].equals(gameBoardArray8[i])) {
+                        buttons[i] = new HitOrMiss(gameBoardArray8[i], true, false);
+                        centerPanel.add(buttons[i]);
+                        j++;
+                    } else {
+                        buttons[i] = new HitOrMiss(gameBoardArray8[i], false, false);
+                        centerPanel.add(buttons[i]);
+                    }
+                }catch(Exception ignored){}
+            }
+
+            ////////AI BOARD
+            centerPanel1.setLayout(new GridLayout(8, 8));
+            List<String> listArray2 = new ArrayList<String>();
+            int r = 0;
+
+            for(String s : GameBoard.arrayAI1) {
+                if(s != null && s.length() > 0) {
+                    listArray2.add(s);
+                }
+            }
+
+            GameBoard.arrayAI1 = listArray2.toArray(new String[0]);
+
+            Arrays.sort(GameBoard.arrayAI1);
+
+            String[] array2Sorted = new String[100];
+
+            System.arraycopy(GameBoard.arrayAI1, 0, array2Sorted, 0, 12);
+
+            for(int t=12; t < 40; t++){
+                array2Sorted[t] = "0";
+            }
+            for (int i = 0; i < 64; i++) {
+                try{
+
+                    if (array2Sorted[r].equals(gameBoardArray8[i])) {
+                        buttons1[i] = new HitOrMiss(gameBoardArray8[i], true, true);
+                        centerPanel1.add(buttons1[i]);
+                        r++;
+                    } else {
+                        buttons1[i] = new HitOrMiss(gameBoardArray8[i], false, true);
+                        centerPanel1.add(buttons1[i]);
+                    }
+                }catch(Exception ignored){}
             }
         }
 
         if(gameBoardSize == 9) {
-            HitOrMiss buttons[]=new HitOrMiss[81];
             centerPanel.setLayout(new GridLayout(9, 9));
-            for (int i = 0; i < 81; i++) {
-                buttons[i] = new HitOrMiss();
-                centerPanel.add(buttons[i]);
+            List<String> listArray1 = new ArrayList<String>();
+            int j = 0;
+
+            for(String s : GameBoard.array1) {
+                if(s != null && s.length() > 0) {
+                    listArray1.add(s);
+                }
             }
 
-            centerPanel1.setLayout(new GridLayout(9, 9));
+            GameBoard.array1 = listArray1.toArray(new String[0]);
+
+            Arrays.sort(GameBoard.array1);
+
+            String[] array1Sorted = new String[100];
+
+            System.arraycopy(GameBoard.array1, 0, array1Sorted, 0, 16);
+
+            for(int t=16; t < 40; t++){
+                array1Sorted[t] = "0";
+            }
             for (int i = 0; i < 81; i++) {
-                buttons[i] = new HitOrMiss();
-                centerPanel1.add(buttons[i]);
+                try{
+
+                    if (array1Sorted[j].equals(gameBoardArray9[i])) {
+                        buttons[i] = new HitOrMiss(gameBoardArray9[i], true, false);
+                        centerPanel.add(buttons[i]);
+                        j++;
+                    } else {
+                        buttons[i] = new HitOrMiss(gameBoardArray9[i], false, false);
+                        centerPanel.add(buttons[i]);
+                    }
+                }catch(Exception ignored){}
+            }
+
+            ////////AI BOARD
+            centerPanel1.setLayout(new GridLayout(9, 9));
+            List<String> listArray2 = new ArrayList<String>();
+            int r = 0;
+
+            for(String s : GameBoard.arrayAI1) {
+                if(s != null && s.length() > 0) {
+                    listArray2.add(s);
+                }
+            }
+
+            GameBoard.arrayAI1 = listArray2.toArray(new String[0]);
+
+            Arrays.sort(GameBoard.arrayAI1);
+
+            String[] array2Sorted = new String[100];
+
+            System.arraycopy(GameBoard.arrayAI1, 0, array2Sorted, 0, 16);
+
+            for(int t=16; t < 40; t++){
+                array2Sorted[t] = "0";
+            }
+            for (int i = 0; i < 81; i++) {
+                try{
+
+                    if (array2Sorted[r].equals(gameBoardArray9[i])) {
+                        buttons1[i] = new HitOrMiss(gameBoardArray9[i], true, true);
+                        centerPanel1.add(buttons1[i]);
+                        r++;
+                    } else {
+                        buttons1[i] = new HitOrMiss(gameBoardArray9[i], false, true);
+                        centerPanel1.add(buttons1[i]);
+                    }
+                }catch(Exception ignored){}
             }
         }
-         */
 
         //Player's ship tracking panel (middle right)
         playerShips.setBorder(raisedBorder);
@@ -212,12 +446,8 @@ public class Game {
                     try {
                         new Welcome();
                         clip2 = new SoundEffect().playClickSound();
-                    } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
                         unsupportedAudioFileException.printStackTrace();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    } catch (LineUnavailableException lineUnavailableException) {
-                        lineUnavailableException.printStackTrace();
                     }
                     gameScreen.dispose();
                     clip.stop();
@@ -230,12 +460,8 @@ public class Game {
                     new Settings();
                     try {
                         clip2 = new SoundEffect().playClickSound();
-                    } catch (LineUnavailableException lineUnavailableException) {
+                    } catch (LineUnavailableException | IOException | UnsupportedAudioFileException lineUnavailableException) {
                         lineUnavailableException.printStackTrace();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
-                        unsupportedAudioFileException.printStackTrace();
                     }
                 }
         );

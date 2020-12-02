@@ -96,16 +96,6 @@ public class Welcome {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         new BoardSelection();
-                        try {
-                            new Game();
-                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
-                            unsupportedAudioFileException.printStackTrace();
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        } catch (LineUnavailableException lineUnavailableException) {
-                            lineUnavailableException.printStackTrace();
-                        }
-                        new BoardSelection();
                         mainScreen.dispose();
                         clip.stop();
                     }
