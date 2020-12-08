@@ -503,18 +503,18 @@ public class Game {
         //Player's ship tracking panel (middle right)
         playerShips.setBorder(raisedBorder);
         playerShips.setBackground(new Color(0,0,0,125)); //a is the transparency value
-        playerShips.setBounds(935,235,305,155);
+        playerShips.setBounds(935,345,305,265);
 
-        //Turn Tracking Panel (bottom right)
+        /*Turn Tracking Panel (bottom right)
         turnTracker.setBorder(raisedBorder);
         turnTracker.setBackground(new Color(0,0,0,125)); //a is the transparency value
         turnTracker.setBounds(935,400,305,220);
-        tracker.updatePanel(turnTracker, style);
+        tracker.updatePanel(turnTracker, style);*/
 
         //Opponent's ship tracking panel (upper right)
         opponentShips.setBorder(raisedBorder);
         opponentShips.setBackground(new Color(0,0,0,125)); //a is the transparency value
-        opponentShips.setBounds(935,70,305,155);
+        opponentShips.setBounds(935,70,305,265);
 
         //Set Screen
         back.add(centerPanel); //Panel for player vs AI game boards
