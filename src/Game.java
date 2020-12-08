@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.awt.Cursor.CROSSHAIR_CURSOR;
+import static java.awt.Cursor.HAND_CURSOR;
+
 
 public class Game {
     private GameBoard gameBoard = null;
@@ -106,6 +109,7 @@ public class Game {
         gameBoardSize = size;
         centerPanel = new JPanel(); //Game boards will be placed here
         centerPanel1 = new JPanel();
+        gameScreen.setCursor(CROSSHAIR_CURSOR);
 
         if(gameBoardSize == 7) {
             buttons = new HitOrMiss[49];

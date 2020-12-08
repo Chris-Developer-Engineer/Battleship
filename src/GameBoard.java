@@ -1,9 +1,11 @@
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Handler;
 
 public class GameBoard extends JFrame {
 
@@ -36,8 +38,9 @@ public class GameBoard extends JFrame {
     private JPanel panel;
     static JFrame frame = null;
     private JLabel label;
-    private JLabel label1 ;
+    private JLabel label1;
     private JLabel label2;
+    private JLabel label3;
     private JTextField tf;
     private JButton button;
 
@@ -45,7 +48,8 @@ public class GameBoard extends JFrame {
     public GameBoard(int size) {
         panel = new JPanel();
         frame = new JFrame();
-        label = new JLabel("Please enter a new coordinate and hit enter (Example: a1, A1, etc.): ");
+        label = new JLabel("Please enter a new coordinate and hit enter.");
+        label3 = new JLabel("Example: a1, A1, etc.");
         label1 = new JLabel("");
         label2 = new JLabel("");
         tf = new JTextField(2);
@@ -53,12 +57,15 @@ public class GameBoard extends JFrame {
 
         gameBoardSize = size;
 
-        frame.setSize(500,200);
+        frame.setSize(400,150);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
 
         label.setBounds(10,20,80,25);
         panel.add(label);
+
+        label3.setBounds(10,20,80,25);
+        panel.add(label3);
 
         tf.setBounds(100,20,165,25);
         panel.add(tf);
@@ -70,8 +77,9 @@ public class GameBoard extends JFrame {
         panel.add(label2);
 
         pack();
-        setLocationRelativeTo(null);
-        //frame.setVisible(true);
+        frame.setAlwaysOnTop(true);
+        frame.setLocation(900,0);
+        frame.setCursor(CROSSHAIR_CURSOR);
 
         button.setBounds(10,80,80,25);
         button.addActionListener(
@@ -559,6 +567,11 @@ public class GameBoard extends JFrame {
             label1.setFont(label.getFont().deriveFont(30.0f));
             label1.setText("It took you " + numOfGuesses + " guesses.");
             label2.setText("");
+            try {
+                Clip sound = new SoundEffect().playGameWon();
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
+                unsupportedAudioFileException.printStackTrace();
+            }
             new Winner();
         } else {
             WinLoss.scoreTracker(false);
@@ -567,6 +580,11 @@ public class GameBoard extends JFrame {
             label1.setFont(label.getFont().deriveFont(30.0f));
             label1.setText("It took them " + numOfGuesses + " guesses.");
             label2.setText("");
+            try {
+                Clip sound2 = new SoundEffect().playGameLost();
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
+                unsupportedAudioFileException.printStackTrace();
+            }
             new Loser();
         }
     }

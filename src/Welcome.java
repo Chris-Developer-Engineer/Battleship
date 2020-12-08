@@ -6,6 +6,9 @@ import javax.swing.*; //GUI
 import java.awt.*; //Font
 import java.awt.event.*; //Listeners
 
+import static java.awt.Cursor.CROSSHAIR_CURSOR;
+import static java.awt.Cursor.HAND_CURSOR;
+
 public class Welcome {
     private static int WIDTH = 800, LENGTH = 500;
     private static Style style = new Style();
@@ -44,6 +47,7 @@ public class Welcome {
         SoundEffect.page = 1;
         clip = new SoundEffect().playMain();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+        mainScreen.setCursor(CROSSHAIR_CURSOR);
     }
 
 

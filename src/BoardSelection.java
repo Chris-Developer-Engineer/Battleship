@@ -5,6 +5,9 @@ import java.awt.*; //Font
 import java.awt.event.*; //Listeners
 import java.io.IOException;
 
+import static java.awt.Cursor.CROSSHAIR_CURSOR;
+import static java.awt.Cursor.HAND_CURSOR;
+
 public class BoardSelection {
     private final int WIDTH = 200, LENGTH = 350;
     private final Style style = new Style();
@@ -34,6 +37,7 @@ public class BoardSelection {
     public BoardSelection() {
         setScreen();
         gameScreen.setVisible(true);
+        gameScreen.setCursor(CROSSHAIR_CURSOR);
     }
 
     public void setScreen() {

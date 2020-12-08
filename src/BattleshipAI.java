@@ -10,7 +10,6 @@ public class BattleshipAI {
     private static int destroyedCount = 0;
     private static int numOfShips;
     private static boolean allDestroyed = false;
-    int[][] test = new int[9][9];
     private static int j;
     static boolean doClickSentHit = false;
     static boolean doClickSentMiss = false;
@@ -35,13 +34,6 @@ public class BattleshipAI {
 
 
     private static int successfulHitCount = 0;
-
-   /* public BattleshipAI(int[][] multiArray){
-
-        this.test = multiArray;
-       /* while(!allDestroyed){
-            AI(multiArray, gridSize);
-        } */
 
     // System.out.println("Final SuccessfulHitCount: " + successfulHitCount);
     // System.out.println("Final Grid["+ row + "]["+column+"] = " + multiArray[row][column]);
@@ -172,8 +164,14 @@ public class BattleshipAI {
     private static void adjSpace(int[][] grid, int srow, int scolumn) {
         System.out.println("Checking adjacent spaces at Grid[" + srow + "][" + scolumn + "] = " + grid[srow][scolumn]);
 
-        if (!checkBottomSpace(grid, srow, scolumn) && !checkTopSpace(grid, srow, scolumn) && !checkRightSpace(grid, srow, scolumn) && !checkLeftSpace(grid, srow, scolumn))
+        if (checkBottomSpace0(grid, srow, scolumn) || checkTopSpace0(grid, srow, scolumn) || checkRightSpace0(grid, srow, scolumn) || checkLeftSpace0(grid, srow, scolumn)){
+        }
+        else{
+            findHit(grid);
+            turn = false;
             return;
+        }
+
 
         while (turn) {
 
@@ -468,6 +466,18 @@ public class BattleshipAI {
 
     }//end checkTopSpace()
 
+    public static boolean checkTopSpace0(int[][] tgrid, int trow, int tcolumn){ // returns true if there is a ship in the top space
+
+        if(trow == 0)
+            return false;
+
+        if(tgrid[trow - 1][tcolumn] == 1 || tgrid[trow - 1][tcolumn] == 0)
+            return true;
+        else
+            return false;
+
+    }//end checkTopSpace0()
+
     public static boolean checkBottomSpace(int[][] bgrid, int brow, int bcolumn){ // returns true if there is a ship in the bottom space
 
         if(brow == (gridSize - 1))
@@ -479,6 +489,18 @@ public class BattleshipAI {
             return false;
 
     }//end checkBottomSpace()
+
+    public static boolean checkBottomSpace0(int[][] bgrid, int brow, int bcolumn){ // returns true if there is a ship in the bottom space
+
+        if(brow == (gridSize - 1))
+            return false;
+
+        if(bgrid[brow + 1][bcolumn] == 1 || bgrid[brow + 1][bcolumn] == 0)
+            return true;
+        else
+            return false;
+
+    }//end checkBottomSpace0()
 
     public static boolean checkLeftSpace(int[][] lgrid, int lrow, int lcolumn){ // returns true if there is a ship in the left space
 
@@ -492,6 +514,18 @@ public class BattleshipAI {
 
     }//end checkLeftSpace()
 
+    public static boolean checkLeftSpace0(int[][] lgrid, int lrow, int lcolumn){ // returns true if there is a ship in the left space
+
+        if(lcolumn == 0)
+            return false;
+
+        if(lgrid[lrow][lcolumn - 1] == 1 || lgrid[lrow][lcolumn - 1] == 0)
+            return true;
+        else
+            return false;
+
+    }//end checkLeftSpace0()
+
     public static boolean checkRightSpace(int[][] rgrid, int rrow, int rcolumn){ // returns true if there is a ship in the right space
 
         if(rcolumn == (gridSize - 1))
@@ -503,6 +537,30 @@ public class BattleshipAI {
             return false;
 
     }//end checkRightSpace()
+
+    public static boolean checkRightSpace0(int[][] rgrid, int rrow, int rcolumn){ // returns true if there is a ship in the right space
+
+        if(rcolumn == (gridSize - 1))
+            return false;
+
+        if(rgrid[rrow][rcolumn + 1] == 1 || rgrid[rrow][rcolumn + 1] == 0)
+            return true;
+        else
+            return false;
+
+    }//end checkRightSpace0()
+
+    public static void findHit(int [][] grid){
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                if(grid[i][j] == 2 & (checkBottomSpace(grid, i, j) || checkTopSpace(grid, i, j) || checkRightSpace(grid, i, j) || checkLeftSpace(grid, i, j))) {
+                    row = i;
+                    column = j;
+                    break;
+                }
+            }
+        }
+    }
 
     public static void isDestroyed(int[][] grid){ // checks for any hidden ships around all previous hits to determine if a ship is destroyed
 
