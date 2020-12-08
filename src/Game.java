@@ -568,7 +568,6 @@ public class Game {
                     } catch (LineUnavailableException | IOException | UnsupportedAudioFileException lineUnavailableException) {
                         lineUnavailableException.printStackTrace();
                     }
-                    gameScreen.setVisible(false);
                 }
         );
 

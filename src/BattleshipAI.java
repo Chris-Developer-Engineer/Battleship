@@ -443,7 +443,7 @@ public class BattleshipAI {
         successfulHitCount = 0;
         for(int i = 0; i < asgrid.length; i++){
             for(int j = 0; j < asgrid[0].length; j++){
-                if(asgrid[i][j] == 2) {
+                if(asgrid[i][j] == 2 & (checkBottomSpace(asgrid, i, j) || checkTopSpace(asgrid, i, j) || checkRightSpace(asgrid, i, j) || checkLeftSpace(asgrid, i, j))) {
                     row = i;
                     column = j;
                     System.out.println("Found 2 at row "+row+" and column " + column);
