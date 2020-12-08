@@ -6,7 +6,7 @@ public class WinLoss {
     static String ranking = "Recruit";
     private boolean winner = true;
 
-    public void scoreTracker(int win, int loss, boolean winner) {
+    public static void scoreTracker(boolean winner) {
         if (winner) {
             win++;
         } else {
@@ -35,5 +35,13 @@ public class WinLoss {
             }
         }
         return ("Your ranking is: " + ranking);
+    }
+
+    public void winInc(){
+        win = win++;
+    }
+
+    public void lossInc(){
+        loss = loss++;
     }
 }

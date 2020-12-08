@@ -10,9 +10,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Game {
 
+public class Game {
+    private GameBoard gameBoard = null;
     int gameBoardSize;
+
+    public static int[][] gameBoardMultiArray7 = new int[7][7];
+    public static int[][] gameBoardMultiArray8 = new int[8][8];
+    public static int[][] gameBoardMultiArray9 = new int[9][9];
+
+    boolean gameBoardFillSentinel = false;
+
     String[] gameBoardArray7 = {"A1","A2","A3","A4","A5","A6","A7","B1","B2","B3","B4","B5","B6"
             ,"B7","C1","C2","C3","C4","C5","C6","C7","D1","D2","D3"
             ,"D4","D5","D6","D7","E1","E2","E3","E4","E5","E6","E7"
@@ -38,7 +46,17 @@ public class Game {
 
     private static final int WIDTH = 1250, LENGTH = 700;
     private static final Style style = new Style();
-    public static final JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
+    public static JFrame gameScreen = style.frame("Game Play", WIDTH, LENGTH);
+    private ImageIcon submarine;
+    private JLabel twoboat;
+    private ImageIcon cruiser;
+    private JLabel threeboat1;
+    private ImageIcon battleship;
+    private JLabel threeboat2;
+    private ImageIcon warMachine;
+    private JLabel fourboat;
+    private ImageIcon carrier;
+    private JLabel fiveboat;
 
     //Menu Instantiation
     private final JMenuBar mainBar = new JMenuBar();
@@ -76,16 +94,15 @@ public class Game {
 
     //Background Data
     TurnTracker tracker = new TurnTracker();
-    BoardTracker userBoard = new BoardTracker();
-    BoardTracker oppBoard = new BoardTracker();
-
 
     //sound effect;
     static Clip clip; // BGM;
     Clip clip2; //clip sound;
 
     //Constructor
+    public Game(){};
     public Game(int size) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        gameScreen = style.frame("Game Play", WIDTH, LENGTH);
         gameBoardSize = size;
         centerPanel = new JPanel(); //Game boards will be placed here
         centerPanel1 = new JPanel();
@@ -105,8 +122,6 @@ public class Game {
             buttons1 = new HitOrMiss[81];
         }
 
-        GameBoard gameBoard = null;
-
         if(size == 7) {
             gameBoard = new GameBoard(7);
         }
@@ -121,11 +136,14 @@ public class Game {
 
         assert gameBoard != null;
         gameBoard.initialize();
+        GameBoard.frame.setVisible(false);
         setScreen();
         gameScreen.setVisible(true);
+        GameBoard.frame.setVisible(true);
         SoundEffect.page = 2;
         clip = new SoundEffect().playGameBGM();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+
     }
 
     public void setScreen(){
@@ -150,7 +168,6 @@ public class Game {
         //Rollover Icons
         mainMenu.setRolloverIcon(mainMenuImageRollover);
         settings.setRolloverIcon(settingsImageRollover);
-
 
         //Win Loss Statistics
         winLossPanel.setBorder(raisedBorder);
@@ -180,6 +197,26 @@ public class Game {
         shipHoldingPanel.setBackground(new Color(0,0,0,125)); //a is the transparency value
         shipHoldingPanel.setBounds(10,300,305,320);
 
+        submarine = new ImageIcon(getClass().getResource("bsSubmarineimg.png"));
+        twoboat = new JLabel(submarine);
+        twoboat.setBounds(40, 310, 240,60);
+
+        cruiser = new ImageIcon(getClass().getResource("bsCruiserimg.png"));
+        threeboat1 = new JLabel(cruiser);
+        threeboat1.setBounds(40,370 , 240,60);
+
+        battleship = new ImageIcon(getClass().getResource("bsBattleshipimg.png"));
+        threeboat2 = new JLabel(battleship);
+        threeboat2.setBounds(40, 430, 240,60);
+
+        warMachine = new ImageIcon(getClass().getResource("bsWarMachineimg.png"));
+        fourboat = new JLabel(warMachine);
+        fourboat.setBounds(40, 490, 240,60);
+
+        carrier = new ImageIcon(getClass().getResource("bsCarrierimg.png"));
+        fiveboat = new JLabel(carrier);
+        fiveboat.setBounds(40, 550, 240,60);
+
         //Set Center Panel (Game boards)
         centerPanel.setBorder(raisedBorder);
         centerPanel.setBackground(new Color(0,0,0, 125)); //a is the transparency value
@@ -190,6 +227,9 @@ public class Game {
 
         //Select Board Size
         if(gameBoardSize == 7) {
+            back.add(twoboat);
+            back.add(threeboat1);
+            back.add(threeboat2);
             centerPanel.setLayout(new GridLayout(7, 7));
             List<String> listArray1 = new ArrayList<String>();
             int j = 0;
@@ -211,6 +251,7 @@ public class Game {
             for(int t=8; t < 40; t++){
                 array1Sorted[t] = "0";
             }
+
             for (int i = 0; i < 49; i++) {
                 try{
 
@@ -247,22 +288,40 @@ public class Game {
             for(int t=8; t < 40; t++){
                 array2Sorted[t] = "0";
             }
+
+            for (int[] ints : gameBoardMultiArray7) {
+                Arrays.fill(ints, 0);
+            }
+
+            int row = 0;
+            int col = 0;
+
             for (int i = 0; i < 49; i++) {
+                if(i == 7 || i == 14 || i == 21 || i == 28 || i == 35 || i == 42) {
+                    row++;
+                    col = 0;
+                }
                 try{
 
                     if (array2Sorted[r].equals(gameBoardArray7[i])) {
                         buttons1[i] = new HitOrMiss(gameBoardArray7[i], true, true);
                         centerPanel1.add(buttons1[i]);
                         r++;
+                        gameBoardMultiArray7[row][col] = 1;
                     } else {
                         buttons1[i] = new HitOrMiss(gameBoardArray7[i], false, true);
                         centerPanel1.add(buttons1[i]);
                     }
+                    col++;
                 }catch(Exception ignored){}
             }
-        }
+        }//End if(gameBoardSize == 7)
 
         if(gameBoardSize == 8) {
+            back.add(twoboat);
+            back.add(threeboat1);
+            back.add(threeboat2);
+            back.add(fourboat);
             centerPanel.setLayout(new GridLayout(8, 8));
             List<String> listArray1 = new ArrayList<String>();
             int j = 0;
@@ -320,22 +379,41 @@ public class Game {
             for(int t=12; t < 40; t++){
                 array2Sorted[t] = "0";
             }
+
+            for (int[] ints : gameBoardMultiArray8) {
+                Arrays.fill(ints, 0);
+            }
+
+            int row = 0;
+            int col = 0;
+
             for (int i = 0; i < 64; i++) {
+                if(i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48 || i == 56) {
+                    row++;
+                    col = 0;
+                }
                 try{
 
                     if (array2Sorted[r].equals(gameBoardArray8[i])) {
                         buttons1[i] = new HitOrMiss(gameBoardArray8[i], true, true);
                         centerPanel1.add(buttons1[i]);
                         r++;
+                        gameBoardMultiArray8[row][col] = 1;
                     } else {
                         buttons1[i] = new HitOrMiss(gameBoardArray8[i], false, true);
                         centerPanel1.add(buttons1[i]);
                     }
+                    col++;
                 }catch(Exception ignored){}
             }
         }
 
         if(gameBoardSize == 9) {
+            back.add(twoboat);
+            back.add(threeboat1);
+            back.add(threeboat2);
+            back.add(fourboat);
+            back.add(fiveboat);
             centerPanel.setLayout(new GridLayout(9, 9));
             List<String> listArray1 = new ArrayList<String>();
             int j = 0;
@@ -393,17 +471,31 @@ public class Game {
             for(int t=16; t < 40; t++){
                 array2Sorted[t] = "0";
             }
+
+            for (int[] ints : gameBoardMultiArray9) {
+                Arrays.fill(ints, 0);
+            }
+
+            int row = 0;
+            int col = 0;
+
             for (int i = 0; i < 81; i++) {
+                if(i == 9 || i == 18 || i == 27 || i == 36 || i == 45 || i == 54 || i == 63 || i == 72) {
+                    row++;
+                    col = 0;
+                }
                 try{
 
                     if (array2Sorted[r].equals(gameBoardArray9[i])) {
                         buttons1[i] = new HitOrMiss(gameBoardArray9[i], true, true);
                         centerPanel1.add(buttons1[i]);
                         r++;
+                        gameBoardMultiArray9[row][col] = 1;
                     } else {
                         buttons1[i] = new HitOrMiss(gameBoardArray9[i], false, true);
                         centerPanel1.add(buttons1[i]);
                     }
+                    col++;
                 }catch(Exception ignored){}
             }
         }
@@ -443,13 +535,26 @@ public class Game {
 
         mainMenu.addActionListener( //Main from menu bar
                 e -> {
+                    ////Restart the game//////
+                    gameScreen.dispose();
+                    gameScreen = null;
+                    gameBoard.gameRestart();
+                    gameBoard.dispose();
+                    gameBoard = null;
+                    buttons = null;
+                    buttons1 = null;
+                    GameBoard.closeGuessWindow();
+                    /////////////////////////
+
                     try {
                         new Welcome();
                         clip2 = new SoundEffect().playClickSound();
                     } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
                         unsupportedAudioFileException.printStackTrace();
                     }
-                    gameScreen.dispose();
+                    GameBoard.frame.dispose();
+                    Winner.close();
+                    Loser.close();
                     clip.stop();
                 }
         );
@@ -463,9 +568,13 @@ public class Game {
                     } catch (LineUnavailableException | IOException | UnsupportedAudioFileException lineUnavailableException) {
                         lineUnavailableException.printStackTrace();
                     }
+                    gameScreen.setVisible(false);
                 }
         );
 
     }
 
+    public static void closeGameScreen(){
+        gameScreen.dispose();
+    }
 }

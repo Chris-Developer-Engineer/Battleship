@@ -4,6 +4,7 @@ public class Ship {
 
     //variables
     private ArrayList<String> location = new ArrayList<String>();
+    private ArrayList<String> location1 = new ArrayList<String>();
     private int size;
     private String name;
 
@@ -28,9 +29,14 @@ public class Ship {
         return location;
     }
 
+    public ArrayList<String> getCurrLocations1() {
+        return location1;
+    }
+
     //Set the ship locations
     public void setShipLocations(ArrayList<String> locationToSet) {
         this.location.addAll(locationToSet);
+        this.location1.addAll(locationToSet);
     }
 
     //Check the user's answer

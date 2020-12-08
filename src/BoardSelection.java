@@ -83,7 +83,7 @@ public class BoardSelection {
                     public void actionPerformed(ActionEvent e) {
                         gameScreen.dispose();
                         try {
-                            new Game(7);
+                            new Game(7); // Constructor for new game with a 7x7 board size
                         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
                             unsupportedAudioFileException.printStackTrace();
                         }
@@ -96,7 +96,7 @@ public class BoardSelection {
                     public void actionPerformed(ActionEvent e) {
                         gameScreen.dispose();
                         try {
-                            new Game(8);
+                            new Game(8); // Constructor for new game with a 8x8 board size
                         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
                             unsupportedAudioFileException.printStackTrace();
                         }
@@ -109,7 +109,7 @@ public class BoardSelection {
                     public void actionPerformed(ActionEvent e) {
                         gameScreen.dispose();
                         try {
-                            new Game(9);
+                            new Game(9); // Constructor for new game with a 9x9 board size
                         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException unsupportedAudioFileException) {
                             unsupportedAudioFileException.printStackTrace();
                         }

@@ -1,20 +1,24 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GameBoard extends JFrame {
 
-    private static final ArrayList<Ship> ship = new ArrayList<>();
-    private static final ArrayList<Ship> shipAI = new ArrayList<>();
+    private ArrayList<Ship> ship = new ArrayList<>();
+    private ArrayList<Ship> shipAI = new ArrayList<>();
     static String[] array = new String[100];
     static String[] array1 = new String[100];
     static String[] arrayAI = new String[100];
     static String[] arrayAI1 = new String[100];
-    int numOfGuesses = 0;
-    int gameOver = 0;
-    int gameOver1 = 0;
-    int k = 0;
-    int r = 0;
+    private int numOfGuesses = 0;
+    private int gameOver = 0;
+    static int gameOver1 = 0;
+    private int k = 0;
+    private int r = 0;
+    static int letter, number;
     static boolean AITurnTracker = false;
     static boolean playerTurnTracker = false;
     static boolean doClickSentHit = false;
@@ -29,19 +33,27 @@ public class GameBoard extends JFrame {
     String alpha = "";
     String coordinate;
 
-    JPanel panel = new JPanel();
-    JFrame frame = new JFrame();
-    JLabel label = new JLabel("Please enter a new coordinate and hit enter (Example: a1, A1, etc.): ");
-    JLabel label1 = new JLabel("");
-    JLabel label2 = new JLabel("");
-    JTextField tf = new JTextField(2);
-    JButton button = new JButton("Enter");
+    private JPanel panel;
+    static JFrame frame = null;
+    private JLabel label;
+    private JLabel label1 ;
+    private JLabel label2;
+    private JTextField tf;
+    private JButton button;
 
+    public GameBoard(){};
     public GameBoard(int size) {
+        panel = new JPanel();
+        frame = new JFrame();
+        label = new JLabel("Please enter a new coordinate and hit enter (Example: a1, A1, etc.): ");
+        label1 = new JLabel("");
+        label2 = new JLabel("");
+        tf = new JTextField(2);
+        button = new JButton("Enter");
 
         gameBoardSize = size;
 
-        frame.setSize(350,200);
+        frame.setSize(500,200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
 
@@ -59,7 +71,7 @@ public class GameBoard extends JFrame {
 
         pack();
         setLocationRelativeTo(null);
-        frame.setVisible(true);
+        //frame.setVisible(true);
 
         button.setBounds(10,80,80,25);
         button.addActionListener(
@@ -68,7 +80,15 @@ public class GameBoard extends JFrame {
                     coordinate = tf.getText();
                     System.out.println(coordinate);
 
-                    gameStart();
+                    try {
+                        gameStart();
+                    } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                        unsupportedAudioFileException.printStackTrace();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    } catch (LineUnavailableException lineUnavailableException) {
+                        lineUnavailableException.printStackTrace();
+                    }
                     tf.setText("");
                 }
         );
@@ -106,12 +126,12 @@ public class GameBoard extends JFrame {
             ship.add(new Ship("Battleship", 3));
             ship.add(new Ship("Cruiser", 3));
             ship.add(new Ship("War Machine", 4));
-            ship.add(new Ship("Carrier", 5));
+            ship.add(new Ship("Carrier", 4));
             shipAI.add(new Ship("Submarine", 2));
             shipAI.add(new Ship("Battleship", 3));
             shipAI.add(new Ship("Cruiser", 3));
             shipAI.add(new Ship("War Machine", 4));
-            shipAI.add(new Ship("Carrier", 5));
+            shipAI.add(new Ship("Carrier", 4));
             alpha = alpha3;
         }
 
@@ -119,17 +139,17 @@ public class GameBoard extends JFrame {
         setPlayerShipLocations();
 
         System.out.println("Welcome to Battleship!");
-    }
+    } //End Initialize
 
-    public void gameStart() {
+    //gameStart is called every time the player and the AI have completed a turn each.
+    //Essentially both events happen each time this method is called until either the AI or the player has won
+    public void gameStart() throws UnsupportedAudioFileException, IOException, LineUnavailableException{
         String guess, result, result1, guess1;
-        int letter, number;
+        //int letter, number;
         Random rand = new Random();
         playerTurnTracker = true;
-
         result = "miss";
         numOfGuesses++;
-
         guess = coordinate;
         guess = guess.toUpperCase();
         for (int i = 0; i < ship.size(); i++) {
@@ -228,16 +248,52 @@ public class GameBoard extends JFrame {
         System.out.println("Computer's turn...");
         result1 = "miss";
 
-        letter = rand.nextInt(5);
-        number = 1 + rand.nextInt(5);
+        AITurnTracker = true;
+        BattleshipAI ba = new BattleshipAI();
+        if(gameBoardSize == 7) {
+            ba.AI(Game.gameBoardMultiArray7, 7);
+        }
+
+        if(gameBoardSize == 8) {
+            ba.AI(Game.gameBoardMultiArray8, 8);
+        }
+
+        if(gameBoardSize == 9) {
+            ba.AI(Game.gameBoardMultiArray9, 9);
+        }
+
+        if(!ba.changed) {
+            letter = ba.row;
+            number = 1 + ba.column;
+        }
+        ba.changed = false;
+        //letter = rand.nextInt(5);
+        //number = 1 + rand.nextInt(5);
         String loc = "" + alpha.charAt(letter) + number;
         System.out.println("The computer guessed: " + loc);
-        AITurnTracker = true;
+        //AITurnTracker = true;
         guess1 = loc;
         guess1 = guess1.toUpperCase();
         for (int i = 0; i < shipAI.size(); i++) {
             result1 = shipAI.get(i).check(guess1);
             if (result1.equals("kill")) {
+                // String Str = shipAI.get(i).getCurrLocations1();
+                // String[] arrOfStr = Str.split(",");//
+                String listString = String.join(", ", shipAI.get(i).getCurrLocations1());
+                String[] arrOfStr = listString.split(", ");
+                for (String a : arrOfStr) {
+                    if(gameBoardSize == 7) {
+                        ba.assignHitD(Game.gameBoardMultiArray7, a);
+                    }
+
+                    if(gameBoardSize == 8) {
+                        ba.assignHitD(Game.gameBoardMultiArray8, a);
+                    }
+
+                    if(gameBoardSize == 9) {
+                        ba.assignHitD(Game.gameBoardMultiArray9, a);
+                    }
+                }
                 result1 = ("The computer sunk your " + shipAI.get(i).getShipName());
                 shipAI.remove(i);
                 gameOver1++;
@@ -247,7 +303,7 @@ public class GameBoard extends JFrame {
             }
         }
 
-        if(gameBoardSize == 7) {
+       /* if(gameBoardSize == 7) {
             if (!result1.equals("miss")) {
                 for (int j = 0; j < 49; j++) {
                     clickSwitch = true;
@@ -323,7 +379,7 @@ public class GameBoard extends JFrame {
                     }
                 }
             }
-        }
+        } */
 
         System.out.println(result1);
 
@@ -489,17 +545,61 @@ public class GameBoard extends JFrame {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+
     }// end setPlayerShipLocations
 
 
 
     // This method is called when the game ends
     private void gameEnd() {
-        if(gameOver == 3 || gameOver == 4 || gameOver == 5) {
-            label1.setText("Congrats, you won! It took you " + numOfGuesses + " guesses.");
-        }
-        else{
-            label1.setText("The computer wins. It took them " + numOfGuesses + " guesses.");
+        if (gameOver == 3 || gameOver == 4 || gameOver == 5) {
+            WinLoss.scoreTracker(true);
+            label.setFont(label.getFont().deriveFont(30.0f));
+            label.setText("Congrats, you won!");
+            label1.setFont(label.getFont().deriveFont(30.0f));
+            label1.setText("It took you " + numOfGuesses + " guesses.");
+            label2.setText("");
+            new Winner();
+        } else {
+            WinLoss.scoreTracker(false);
+            label.setFont(label.getFont().deriveFont(30.0f));
+            label.setText("The computer wins.");
+            label1.setFont(label.getFont().deriveFont(30.0f));
+            label1.setText("It took them " + numOfGuesses + " guesses.");
+            label2.setText("");
+            new Loser();
         }
     }
-}
+
+        public void gameRestart () {
+            ship = new ArrayList<>();
+            shipAI = new ArrayList<>();
+            array = new String[100];
+            array1 = new String[100];
+            arrayAI = new String[100];
+            arrayAI1 = new String[100];
+            numOfGuesses = 0;
+            gameOver = 0;
+            gameOver1 = 0;
+            k = 0;
+            r = 0;
+            number = 0;
+            letter = 0;
+            AITurnTracker = false;
+            playerTurnTracker = false;
+            doClickSentHit = false;
+            doClickSentMiss = false;
+            doClickSentHitAI = false;
+            doClickSentMissAI = false;
+            clickSwitch = false;
+            alpha1 = "ABCDEFG";
+            alpha2 = "ABCDEFGH";
+            alpha3 = "ABCDEFGHI";
+            alpha = "";
+            coordinate = "";
+        }// End gameRestart
+
+        public static void closeGuessWindow () {
+            frame.dispose();
+        }
+}    //End GameBoard
