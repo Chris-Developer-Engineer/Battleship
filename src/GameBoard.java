@@ -164,6 +164,7 @@ public class GameBoard extends JFrame {
             result = ship.get(i).check(guess);
             if (result.equals("kill")) {
                 result = ("you sunk " + ship.get(i).getShipName());
+                Tracker.updateLabels(1, ship.get(i).getShipName());
                 ship.remove(i);
                 gameOver++;
                 break;
@@ -303,6 +304,7 @@ public class GameBoard extends JFrame {
                     }
                 }
                 result1 = ("The computer sunk your " + shipAI.get(i).getShipName());
+                Tracker.updateLabels(0, shipAI.get(i).getShipName());
                 shipAI.remove(i);
                 gameOver1++;
                 break;
@@ -560,7 +562,7 @@ public class GameBoard extends JFrame {
 
     // This method is called when the game ends
     private void gameEnd() {
-        if (gameOver == 3 || gameOver == 4 || gameOver == 5) {
+        if ((gameBoardSize == 7 && gameOver == 3) || (gameBoardSize == 8 && gameOver == 4) || (gameBoardSize == 9 && gameOver == 5)){
             WinLoss.scoreTracker(true);
             label.setFont(label.getFont().deriveFont(30.0f));
             label.setText("Congrats, you won!");
@@ -589,35 +591,35 @@ public class GameBoard extends JFrame {
         }
     }
 
-        public void gameRestart () {
-            ship = new ArrayList<>();
-            shipAI = new ArrayList<>();
-            array = new String[100];
-            array1 = new String[100];
-            arrayAI = new String[100];
-            arrayAI1 = new String[100];
-            numOfGuesses = 0;
-            gameOver = 0;
-            gameOver1 = 0;
-            k = 0;
-            r = 0;
-            number = 0;
-            letter = 0;
-            AITurnTracker = false;
-            playerTurnTracker = false;
-            doClickSentHit = false;
-            doClickSentMiss = false;
-            doClickSentHitAI = false;
-            doClickSentMissAI = false;
-            clickSwitch = false;
-            alpha1 = "ABCDEFG";
-            alpha2 = "ABCDEFGH";
-            alpha3 = "ABCDEFGHI";
-            alpha = "";
-            coordinate = "";
-        }// End gameRestart
+    public void gameRestart () {
+        ship = new ArrayList<>();
+        shipAI = new ArrayList<>();
+        array = new String[100];
+        array1 = new String[100];
+        arrayAI = new String[100];
+        arrayAI1 = new String[100];
+        numOfGuesses = 0;
+        gameOver = 0;
+        gameOver1 = 0;
+        k = 0;
+        r = 0;
+        number = 0;
+        letter = 0;
+        AITurnTracker = false;
+        playerTurnTracker = false;
+        doClickSentHit = false;
+        doClickSentMiss = false;
+        doClickSentHitAI = false;
+        doClickSentMissAI = false;
+        clickSwitch = false;
+        alpha1 = "ABCDEFG";
+        alpha2 = "ABCDEFGH";
+        alpha3 = "ABCDEFGHI";
+        alpha = "";
+        coordinate = "";
+    }// End gameRestart
 
-        public static void closeGuessWindow () {
-            frame.dispose();
-        }
+    public static void closeGuessWindow () {
+        frame.dispose();
+    }
 }    //End GameBoard

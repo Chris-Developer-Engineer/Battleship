@@ -81,6 +81,7 @@ public class Winner {
                         GameBoard.closeGuessWindow();
                         /////////////////////////
                         game.clip.stop();
+                        Tracker.clearPanel();
                     }
                 }
         );

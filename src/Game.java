@@ -88,15 +88,12 @@ public class Game {
     public static JPanel centerPanel1; //Game boards will be placed here
     private final JPanel winLossPanel = new JPanel(); //Game boards will be placed here
     private final JPanel shipHoldingPanel = new JPanel(); //Holds ships on bottom left of window
-    private final JPanel opponentShips = new JPanel(); //Opponent's ship tracking panel
-    private final JPanel playerShips = new JPanel(); //Player's ship tracking panel
+    public static JPanel opponentShips = new JPanel(); //Opponent's ship tracking panel
+    public static JPanel playerShips = new JPanel(); //Player's ship tracking panel
     private final JPanel turnTracker = new JPanel(); //Displays turn tracking
 
     //Borders
     Border raisedBorder = new EtchedBorder(EtchedBorder.RAISED); //Raised Border
-
-    //Background Data
-    TurnTracker tracker = new TurnTracker();
 
     //sound effect;
     static Clip clip; // BGM;
@@ -319,6 +316,7 @@ public class Game {
                     col++;
                 }catch(Exception ignored){}
             }
+            Tracker.setLabels(7);
         }//End if(gameBoardSize == 7)
 
         if(gameBoardSize == 8) {
@@ -410,6 +408,7 @@ public class Game {
                     col++;
                 }catch(Exception ignored){}
             }
+            Tracker.setLabels(8);
         }
 
         if(gameBoardSize == 9) {
@@ -502,6 +501,7 @@ public class Game {
                     col++;
                 }catch(Exception ignored){}
             }
+            Tracker.setLabels(9);
         }
 
         //Player's ship tracking panel (middle right)
@@ -519,6 +519,7 @@ public class Game {
         opponentShips.setBorder(raisedBorder);
         opponentShips.setBackground(new Color(0,0,0,125)); //a is the transparency value
         opponentShips.setBounds(935,70,305,265);
+
 
         //Set Screen
         back.add(centerPanel); //Panel for player vs AI game boards
@@ -560,6 +561,7 @@ public class Game {
                     Winner.close();
                     Loser.close();
                     clip.stop();
+                    Tracker.clearPanel();
                 }
         );
 

@@ -79,6 +79,7 @@ public class Loser {
                         GameBoard.closeGuessWindow();
                         /////////////////////////
                         game.clip.stop();
+                        Tracker.clearPanel();
                     }
                 }
         );
