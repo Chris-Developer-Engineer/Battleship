@@ -1,7 +1,11 @@
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Winner {
     private final int WIDTH = 650, LENGTH = 600;
@@ -49,13 +53,42 @@ public class Winner {
         back.add(returnToMenu);
         back.add(overhead);
 
+
         //Action Listener
         returnToMenu.addActionListener( //Main Menu button
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        try {
+                            new Welcome();
+                        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                            unsupportedAudioFileException.printStackTrace();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        } catch (LineUnavailableException lineUnavailableException) {
+                            lineUnavailableException.printStackTrace();
+                        }
                         winScreen.dispose();
+                        ////Restart the game//////
+                        Game game = new Game();
+                        GameBoard gameBoard = new GameBoard();
+                        game.gameScreen.dispose();
+                        game.gameScreen = null;
+                        gameBoard.gameRestart();
+                        gameBoard.dispose();
+                        gameBoard = null;
+                        game.buttons = null;
+                        game.buttons1 = null;
+                        GameBoard.closeGuessWindow();
+                        /////////////////////////
+                        game.clip.stop();
+                        Tracker.clearPanel();
                     }
                 }
         );
+    }
+
+    public static void close(){
+        Winner win = new Winner();
+        win.winScreen.dispose();
     }
 }

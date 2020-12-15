@@ -33,6 +33,22 @@ public class SoundEffect {
         return play("Click Sound Effects.wav",Volume.x);
     }
 
+    Clip playGameHit() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+        return play("HITSOUND.wav",Volume.x);
+    }
+
+    Clip playGameMiss() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+        return play("MISSEDSOUND.wav",Volume.x);
+    }
+
+    Clip playGameLost() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+        return play("Losing sound.wav",Volume.x);
+    }
+    Clip playGameWon() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+        return play("Winning sound.wav",Volume.x);
+    }
+
+
     public static void setVol(double vol, Clip clip) {
         FloatControl gain = (FloatControl)clip.getControl(Type.MASTER_GAIN);
         float dB = (float)(Math.log(vol) / Math.log(10.0D) * 20.0D);

@@ -6,6 +6,9 @@ import javax.swing.*; //GUI
 import java.awt.*; //Font,Dimensions
 import java.awt.event.*; //Listeners
 
+import static java.awt.Cursor.CROSSHAIR_CURSOR;
+import static java.awt.Cursor.HAND_CURSOR;
+
 public class Settings {
     private final int WIDTH = 650, LENGTH = 600;
     private Style style = new Style();
@@ -41,6 +44,7 @@ public class Settings {
     public Settings(){
         setScreen();
         settingsScreen.setVisible(true);
+        settingsScreen.setCursor(CROSSHAIR_CURSOR);
     }
 
     public void setScreen(){

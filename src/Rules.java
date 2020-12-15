@@ -6,6 +6,9 @@ import java.awt.*; //Font,Dimensions
 import java.awt.event.*; //Listeners
 import java.io.IOException;
 
+import static java.awt.Cursor.CROSSHAIR_CURSOR;
+import static java.awt.Cursor.HAND_CURSOR;
+
 
 public class Rules {
     private final int WIDTH = 650, LENGTH = 600;
@@ -31,6 +34,7 @@ public class Rules {
     public Rules(){
         setScreen();
         rulesScreen.setVisible(true);
+        rulesScreen.setCursor(CROSSHAIR_CURSOR);
     }
 
     public void setScreen(){
